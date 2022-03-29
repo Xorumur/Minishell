@@ -3,7 +3,7 @@ NAME = minishell
 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-SRCS =	
+SRCS =	main.c
 
 OBJS = $(SRCS:.c=.o)
 
