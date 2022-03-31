@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 09:40:25 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:09:04 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/03/31 14:34:42 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/03/31 14:37:13 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+void	handle_sigquit(int sig)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	if (!src)
-		return (ft_strlen(dest));
-	while (dest[i] && i < size)
-		i++;
-	while (src[j] && (i + j + 1) < size)
+	if (sig == SIGQUIT)
 	{
-		dest[i + j] = src[j];
-		j++;
+		printf("Quit: 3\n");
+		rl_on_new_line();
 	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
 }
