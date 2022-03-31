@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 20:00:37 by epfennig         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:36:32 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	cmd_unset(char *name);
 /* === SIGNALS === */
 void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
+void	echo_control_seq(int c);
 
 /* === LEXER === */
 t_token		*lexer_get_next_token(t_lexer *lexer);

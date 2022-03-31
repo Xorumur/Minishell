@@ -44,14 +44,17 @@ void	tokenizer(void)
 void	minishell(void)
 {
 	init_data();
+	echo_control_seq(0);
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
+	printf("Here\n");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);
 	if (g_data.cmd == NULL)
 		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
-	else
+	else if (!(g_data.cmd[0] == 0))
 	{
 		signal(SIGQUIT, handle_sigquit); // Activate handler for sigquit (^\Quit: 3)
+		echo_control_seq(1);
 		g_data.lexer = init_lexer(g_data.cmd);
 		tokenizer();
 		t_tokenlist* tmp = g_data.tokens;
@@ -66,6 +69,7 @@ void	minishell(void)
 			printf("Error: quote error\n");
 		free_all();
 	}
+	signal(SIGQUIT, SIG_IGN);
 	free(g_data.cmd);
 }
 
