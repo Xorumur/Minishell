@@ -19,6 +19,9 @@ void	init_data(void)
 	g_data.status.is_redir = FALSE;
 	g_data.status.is_pipe = FALSE;
 	g_data.status.is_heredoc = FALSE;
+	g_data.status.is_dlredir = FALSE;
+	g_data.status.ctrlc = FALSE;
+
 }
 
 void	tokenizer(void)
@@ -43,17 +46,11 @@ void	minishell(void)
 	init_data();
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
-	add_history(g_data.cmd);
+		add_history(g_data.cmd);
 	if (g_data.cmd == NULL)
-	{
-		ft_putstr_fd("exit\n", STDERR_FILENO);
-		exit(1);
-	}
+		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
 	else
 	{
-		/*
-		** The command is valid -> Tokenize and execute it :
-		*/
 		signal(SIGQUIT, handle_sigquit); // Activate handler for sigquit (^\Quit: 3)
 		g_data.lexer = init_lexer(g_data.cmd);
 		tokenizer();
@@ -63,12 +60,10 @@ void	minishell(void)
 			printf("id = %i value = [%s]\n", tmp->token->e_type, tmp->token->value);
 			tmp = tmp->next;
 		}
-		if (g_data.quoterror == 0)
+		if (g_data.quoterror == FALSE)
 			;// Execute command
 		else
 			printf("Error: quote error\n");
-		// At the end of every commands free everything that is used for commands
-		// Free token list
 		free_all();
 	}
 	free(g_data.cmd);
@@ -87,6 +82,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 		g_data.status.is_env = FALSE;
+	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (42)
 	{

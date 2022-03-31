@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:16:49 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:00:37 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct s_status {
 	t_bool	is_redir;		// is there redir in cmd ?
 	t_bool	is_pipe;		// is there pipes in cmd ?
 	t_bool	is_heredoc;		// is there heredoc in cmd ? (double left redir)
+	t_bool	is_dlredir;
+	t_bool	ctrlc;
 }	t_status;
 
 
@@ -130,9 +132,9 @@ void	cmd_env(int fd);
 void	cmd_exit(int fd);
 void	cmd_unset(char *name);
 
-
 /* === SIGNALS === */
 void	handle_sigquit(int sig);
+void	handle_sigint(int sig);
 
 /* === LEXER === */
 t_token		*lexer_get_next_token(t_lexer *lexer);

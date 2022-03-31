@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 15:24:38 by mlecherb          #+#    #+#             */
-/*   Updated: 2021/10/26 15:24:47 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/03/31 19:48:06 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
@@ -25,4 +25,5 @@ void	ft_putstr_fd(char *s, int fd)
 			i++;
 		}
 	}
+	return (0);
 }
