@@ -1,13 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 14:31:32 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 14:31:32 by mlecherb         ###   ########.fr       */
-/*                                                                            */
+       8       8      55
+lecherb  2021_nice    408 Mar 31 19:55 .
+drwxr-xr-x   3 mlecherb  2021_nice    102 Mar 31 11:53 ..
+drwxr-xr-x  14 mlecherb  2021_nice    476 Mar 31 19:19 .git
+drwxr-xr-x   3 mlecherb  2021_nice    102 Mar 31 13:41 .vscode
+-rw-r--r--   1 mlecherb  2021_nice    914 Mar 31 18:13 Makefile
+-rw-r--r--   1 mlecherb  2021_nice   2697 Mar 31 20:22 a
+drwxr-xr-x   4 mlecherb  2021_nice    136 Mar 31 13:47 includes
+drwxr-xr-x  93 mlecherb  2021_nice   3162 Mar 31 18:09 libft
+-rw-r--r--   1 mlecherb  2021_nice   2697 Mar 31 18:16 main.c
+-rw-r--r--   1 mlecherb  2021_nice   2480 Mar 31 19:55 main.o
+-rwxr-xr-x   1 mlecherb  2021_nice  20252 Mar 31 19:55 minishell
+drwxr-xr-x  15 mlecherb  2021_nice    510 Mar 31 19:55 srcs
+                                                                          */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
@@ -64,14 +68,11 @@ void	minishell(void)
 			tmp = tmp->next;
 		}
 		if (g_data.quoterror == 0)
-			call_parser();// Execute command
+			;// Execute command
 		else
 			printf("Error: quote error\n");
 		// At the end of every commands free everything that is used for commands
 		// Free token list
-		if (g_data.env)
-			free_tab(g_data.tab_env);
-		g_data.tab_env = get_new_env();
 		free_all();
 	}
 	free(g_data.cmd);

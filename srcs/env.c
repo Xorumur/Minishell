@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:11:01 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:36:19 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,41 @@ char	*ft_getenv(char *name)
 	}
 	g_data.env = tmp;
 	return (content);
+}
+
+int	ft_lstsize(t_env *env)
+{
+	int	i;
+	t_env	*tmp;
+
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char	**get_new_env(void)
+{
+	char	**env;
+	t_env	*tmp;
+	int		i;
+	char *temp;
+
+	i = 0;
+	tmp = g_data.env;
+	env = malloc(sizeof(char *) * (ft_lstsize(g_data.env) + 1));
+	while (tmp)
+	{
+		temp = ft_strjoin(tmp->name, "=");
+		env[i] = ft_strjoin(temp, tmp->content);
+		free(temp);
+		i++;
+		tmp = tmp->next;
+	}
+	env[i] = NULL;
+	return (env);
 }

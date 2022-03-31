@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:16:49 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:12:53 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ typedef struct s_status {
 	t_bool	is_heredoc;		// is there heredoc in cmd ? (double left redir)
 }	t_status;
 
+typedef struct s_pipe {
+	struct s_pipe	*prev;
+	char			*path;
+	char			**cmd;
+	t_bool			is_redir;
+	int				fd_redir;
+	struct s_pipe	*next;
+	
+}	t_pipe;
 
 /* === Global Struct === */
 typedef struct t_data {
@@ -96,6 +105,8 @@ typedef struct t_data {
 	int				exec;		// Return number from cmds
 	t_bool			quoterror;
 
+	t_pipe			*parser;
+	char			**tab_env;
 }	t_data;
 
 t_data		g_data;
@@ -103,12 +114,13 @@ t_data		g_data;
 
 
 void		rl_replace_line(const char *text, int clear_undo);
-
+void		call_parser(void);
 
 /* === ENV === */
 void		init_data_env(char **env);
 char		*ft_getenv(char *name);
 void		print_env(t_env *env, int fd);
+char		**get_new_env(void);
 
 /* === UTILS / LIST === */
 t_env		*ft_lstnew_env(char *name, char *content);
@@ -116,7 +128,6 @@ void		ft_lstadd_back_env(t_env **alst, t_env *new);
 void		ft_lstadd_back_token(t_tokenlist **alst, t_tokenlist *new);
 t_tokenlist	*ft_lstnew_token(t_token* token);
 void		free_all(void);
-
 char		*ft_realloc(char *src, int size);
 void		free_tab(char **tableau);
 void		print_tab(char **x);
