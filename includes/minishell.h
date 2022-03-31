@@ -22,7 +22,11 @@
 typedef struct s_env {
 	char	*name;
 	char	*content;
-	t_env	*next;
+	struct s_env	*next;
 }	t_env;
+
+typedef struct t_data {
+	t_env *env;
+}	g_data;
 
 #endif
