@@ -19,4 +19,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_env {
+	char	*name;
+	char	*content;
+	t_env	*next;
+}	t_env;
+
 #endif
