@@ -16,6 +16,24 @@ char	*ft_realloc(char *src, int size)
 	return (dest);
 }
 
+char	**realloc_tab(char	**t, int size)
+{
+	int		i;
+	int		j;
+	char	**dest;
+
+	dest = malloc(sizeof(char *) * size);
+	if (dest == NULL)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (t[++i])
+		dest[i] = ft_strcpy(dest[i], t[i]);
+	free_tab(t);
+	dest[i] = NULL;
+	return (dest);
+}
+
 void	print_tab(char **x)
 {
 	int	i;

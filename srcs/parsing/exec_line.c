@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:39:22 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 21:52:48 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:22:10 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	**fill_tab(t_tokenlist **tmp, char **cmd)
 	while ((*tmp) && (*tmp)->token->e_type == 0)
 	{
 		cmd[i] = ft_strdup((*tmp)->token->value);
-		ft_putstr_fd(cmd[i], STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		// ft_putstr_fd(cmd[i], STDERR_FILENO);
+		// ft_putstr_fd("\n", STDERR_FILENO);
 		i++;
 		(*tmp) = (*tmp)->next;
 	}
@@ -41,7 +41,7 @@ void	parser(t_tokenlist *tmp, int in)
 		return ;
 	cmd = malloc(sizeof(char *) * 100);
 	cmd = fill_tab(&tmp, cmd);
-	printf("pointer = %p\n", tmp);
+	// printf("pointer = %p\n", tmp);
 	if (tmp && tmp->token->e_type == 3)
 	{
 		tmp = tmp->next;

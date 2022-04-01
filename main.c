@@ -49,7 +49,7 @@ void	minishell(void)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(1);
 	}
-	else
+	else if (!(g_data.cmd[0] == 0))
 	{
 		/*
 		** The command is valid -> Tokenize and execute it :
@@ -64,7 +64,7 @@ void	minishell(void)
 			tmp = tmp->next;
 		}
 		if (g_data.quoterror == 0)
-			call_parser();// Execute command
+			parsing();// Execute command
 		else
 			printf("Error: quote error\n");
 		// At the end of every commands free everything that is used for commands

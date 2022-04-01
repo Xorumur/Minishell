@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 21:12:53 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:43:11 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ t_data		g_data;
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		call_parser(void);
+void		parsing(void);
 
 /* === ENV === */
 void		init_data_env(char **env);
@@ -129,6 +130,7 @@ void		ft_lstadd_back_token(t_tokenlist **alst, t_tokenlist *new);
 t_tokenlist	*ft_lstnew_token(t_token* token);
 void		free_all(void);
 char		*ft_realloc(char *src, int size);
+char		**realloc_tab(char	**t, int size);
 void		free_tab(char **tableau);
 void		print_tab(char **x);
 
