@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 12:40:18 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:49:25 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ typedef struct s_pipe {
 	char			*path;
 	char			**cmd;
 	t_bool			is_redir;
+	t_bool			is_pipe;
 	int				fd_redir;
 	struct s_pipe	*next;
-	
 }	t_pipe;
 
 /* === Global Struct === */

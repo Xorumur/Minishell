@@ -44,7 +44,7 @@ void	tokenizer(void)
 void	minishell(void)
 {
 	init_data();
-	// echo_control_seq(0);
+	echo_control_seq(0);
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);
@@ -56,7 +56,7 @@ void	minishell(void)
 		** The command is valid -> Tokenize and execute it :
 		*/
 		signal(SIGQUIT, handle_sigquit); // Activate handler for sigquit (^\Quit: 3)
-		// echo_control_seq(1);
+		echo_control_seq(1);
 		g_data.lexer = init_lexer(g_data.cmd);
 		tokenizer();
 		t_tokenlist* tmp = g_data.tokens;
