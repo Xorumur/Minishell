@@ -45,6 +45,8 @@ void	minishell(void)
 {
 	init_data();
 	echo_control_seq(0);
+	// if (g_data.verif == TRUE)
+	// 	printf("\n");
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);
@@ -96,6 +98,7 @@ int	main(int argc, char **argv, char **env)
 		g_data.status.is_env = FALSE;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	g_data.verif = FALSE;
 	while (42)
 	{
 		minishell();

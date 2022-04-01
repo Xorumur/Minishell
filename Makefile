@@ -1,7 +1,7 @@
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS =	main.c \
 		srcs/free.c \
@@ -19,7 +19,8 @@ SRCS =	main.c \
 		srcs/lexer/lexer_utils.c \
 		srcs/parsing/exec_line.c \
 		srcs/parsing/parsing.c \
-
+		srcs/parsing/handle_error.c \
+		srcs/parsing/fill_node.c \
 
 OBJS = $(SRCS:.c=.o)
 

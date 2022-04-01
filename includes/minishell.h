@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 12:49:25 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 21:29:03 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_pipe {
 	char			**cmd;
 	t_bool			is_redir;
 	t_bool			is_pipe;
+	int				fd[2];
 	int				fd_redir;
 	struct s_pipe	*next;
 }	t_pipe;
@@ -107,8 +108,10 @@ typedef struct t_data {
 	int				exec;		// Return number from cmds
 	t_bool			quoterror;
 
-	t_pipe			*parser;
+	t_pipe			*pipe;
 	char			**tab_env;
+
+	t_bool			verif;
 }	t_data;
 
 t_data		g_data;
@@ -118,6 +121,9 @@ t_data		g_data;
 void		rl_replace_line(const char *text, int clear_undo);
 void		call_parser(void);
 void		parsing(void);
+int			handle_error_token(void);
+t_tokenlist	*switcher(t_tokenlist *lst);
+char		*search_path(char *cmd);
 
 /* === ENV === */
 void		init_data_env(char **env);
@@ -135,6 +141,10 @@ char		*ft_realloc(char *src, int size);
 char		**realloc_tab(char	**t, int size);
 void		free_tab(char **tableau);
 void		print_tab(char **x);
+void		ft_lstadd_back_pipe(t_pipe **alst, t_pipe *new);
+t_pipe		*ft_lstnew_pipe(char **cmd, int next_token, char *file);
+int			tab_size(char **t);
+
 
 /* === Builtins === */
 void	cmd_export(char	*name, char *content, int fd);

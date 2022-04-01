@@ -32,7 +32,7 @@ t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token)
 int	ft_isprint_token(int c)
 {
 	if (c == '\"' || c == '=' || c == ' '
-		|| c == '|' || c == '\'')
+		|| c == '|' || c == '\'' || c == '>')
 		return (1);
 	else
 		return (0);

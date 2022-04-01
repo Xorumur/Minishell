@@ -6,27 +6,49 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:45:47 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 20:54:32 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 21:52:52 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_pipe	*ft_lstnew_pipe(char *name, char *content)
+t_pipe	*ft_lstnew_pipe(char **cmd, int next_token, char *file)
 {
 	t_pipe	*new;
 
 	new = malloc(sizeof(t_pipe));
 	if (new == NULL)
 		return (NULL);
+	new->path = ft_strdup(search_path(cmd[0]));
+	print_tab(&cmd[1]);
+	printf("token : %i\n", next_token);
+	new->cmd = realloc_tab(&cmd[1], tab_size(&cmd[1]) + 1);
+	printf("token : %i\n", next_token);
+	if (next_token == 6)
+	{
+		new->is_redir = TRUE;
+		new->fd_redir = open(file, O_CREAT | O_WRONLY | O_TRUNC,
+							0644);
+	}
+	else if (next_token == 3)
+	{
+		new->is_pipe = TRUE;
+		pipe(new->fd);
+	}
+	else if (next_token == 8)
+	{
+		new->is_redir = TRUE;
+		new->fd_redir = open(file, O_CREAT | O_WRONLY | O_APPEND,
+							0644);
+	}
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-void	ft_lstadd_back_pipe(t_env **alst, t_env *new)
+void	ft_lstadd_back_pipe(t_pipe **alst, t_pipe *new)
 {
-	t_env	*temp;
+	t_pipe	*temp;
 
 	if (!new)
 		return ;

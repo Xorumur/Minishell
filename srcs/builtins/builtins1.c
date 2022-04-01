@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:58:09 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 16:58:36 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 18:49:04 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	cmd_unset(char *name)
 	tmp = g_data.env;
 	while (tmp)
 	{
-		if (tmp->name == name)
+		if (ft_strncmp(name, g_data.env->name, ft_strlen(name)) == 0)
 		{
 			del = tmp;
 			tmp->prev->next = tmp->next;
