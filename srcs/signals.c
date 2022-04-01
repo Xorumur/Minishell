@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:34:42 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 12:51:07 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:57:16 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	handle_sigint(int sig)
 	{
 		if (g_data.status.is_fork == FALSE && g_data.status.is_dlredir == FALSE) 
 		{
+			rl_replace_line("", 0);
 			ft_putstr_fd("\n", STDOUT_FILENO);
 			rl_on_new_line();
 			rl_redisplay();
-			rl_replace_line("", 0);
 		}
 		else if (g_data.status.is_fork == TRUE)
 		{
