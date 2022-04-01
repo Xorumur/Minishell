@@ -23,10 +23,8 @@ OBJS = $(SRCS:.c=.o)
 
 all:		libft $(NAME)
 
-# ./includes/libreadline.a
-
 $(NAME):	$(OBJS)
-			gcc $(CFLAGS) $(OBJS) ./libft/libft.a -lreadline -lncurses -o $(NAME)
+			gcc $(CFLAGS) $(OBJS) ./libft/libft.a -lreadline -lncurses -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include -o $(NAME)
 
 libft:
 			make -C ./libft
