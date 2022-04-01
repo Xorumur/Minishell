@@ -65,17 +65,13 @@ void	minishell(void)
 			printf("id = %i value = [%s]\n", tmp->token->e_type, tmp->token->value);
 			tmp = tmp->next;
 		}
-		if (g_data.quoterror == 0)
-			parsing();// Execute command
-		else
-			printf("Error: quote error\n");
 		// At the end of every commands free everything that is used for commands
 		// Free token list
 		if (g_data.env)
 			free_tab(g_data.tab_env);
 		g_data.tab_env = get_new_env();
 		if (g_data.quoterror == FALSE)
-			;// Execute command
+			parsing();// Execute command
 		else
 			printf("Error: quote error\n");
 		free_all();
