@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:55:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 19:12:43 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/02 16:00:12 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,10 @@ int	pipe_verif(t_tokenlist *tmp)
 	t_tokenlist *lst;
 
 	lst = tmp;
-	if (lst->next && lst->next->token->e_type == 6 && lst->next->next != NULL)
-		return (0);	
-	else if (lst->next && lst->next->token->e_type != 0)
-	{
-		printf("syntax error near unexpected token '%s'\n", tmp->next->token->value);
-		g_data.verif = TRUE;
-		return(-1);
-	}
-	else if (lst->next == NULL)
-	{
-		printf("syntax error near unexpected token 'newline'\n");
-		g_data.verif = TRUE;
-		return(-1);
-	}
-	else
-	{
-		g_data.verif = FALSE;
-		return (0);
-	}
+		printf("syntax error near unexpected token '|'\n");
+	g_data.verif = TRUE;
+	return(-1);
+
 }
 
 int	redir_verif(t_tokenlist *tmp)

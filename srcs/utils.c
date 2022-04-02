@@ -29,11 +29,11 @@ char	**realloc_tab(char	**t, int size)
 	j = 0;
 	while (t[i])
 	{
-		dest[i] = ft_strcpy(dest[i], t[i]);
+		dest[i] = ft_strdup(t[i]);
 		i++;
 		j++;
 	}
-	free_tab(t);
+	// free_tab(t);
 	dest[i] = NULL;
 	return (dest);
 }

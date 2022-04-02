@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 21:29:03 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/02 18:34:01 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_pipe {
 	struct s_pipe	*prev;
 	char			*path;
 	char			**cmd;
+	char			*file;
 	t_bool			is_redir;
 	t_bool			is_pipe;
 	int				fd[2];
@@ -119,10 +120,8 @@ t_data		g_data;
 
 
 void		rl_replace_line(const char *text, int clear_undo);
-void		call_parser(void);
 void		parsing(void);
 int			handle_error_token(void);
-t_tokenlist	*switcher(t_tokenlist *lst);
 char		*search_path(char *cmd);
 
 /* === ENV === */
@@ -141,8 +140,7 @@ char		*ft_realloc(char *src, int size);
 char		**realloc_tab(char	**t, int size);
 void		free_tab(char **tableau);
 void		print_tab(char **x);
-void		ft_lstadd_back_pipe(t_pipe **alst, t_pipe *new);
-t_pipe		*ft_lstnew_pipe(char **cmd, int next_token, char *file);
+int			verif_multiple_redir(t_tokenlist **token);
 int			tab_size(char **t);
 
 
