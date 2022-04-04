@@ -45,8 +45,6 @@ void	minishell(void)
 {
 	init_data();
 	echo_control_seq(0);
-	// if (g_data.verif == TRUE)
-	// 	printf("\n");
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);

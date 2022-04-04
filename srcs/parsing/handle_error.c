@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:55:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 13:56:19 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/04 18:29:29 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	dredirl_verif(t_tokenlist *tmp)
 	t_tokenlist *lst;
 
 	lst = tmp;
-	if (!lst->prev)
-	{
-		printf("syntax error near unexpected token `newline'\n");
-		g_data.verif = TRUE;
-		return (-1);
-	}
-	else if (lst->next == NULL)
+	// if (!lst->prev)
+	// {
+	// 	printf("syntax error near unexpected token `newline'\n");
+	// 	g_data.verif = TRUE;
+	// 	return (-1);
+	// }
+	if (lst->next == NULL)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		g_data.verif = TRUE;

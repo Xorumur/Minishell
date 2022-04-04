@@ -1,26 +1,47 @@
 #include "../../includes/minishell.h"
 
-int heredoc(t_tokenlist **token)
+int		verif_limiter(char *s1, char *limiter)
 {
-    int     in;
-    char    **doc;
+	int	i;
+	
+	i = 0;
+	while (s1[i] == limiter[i])
+	{
+		if (s1[i] == '\0' && limiter[i] == '\0')
+			return (1);
+		i++;
+	}
+	return (-1);
+}
+
+void	heredoc(t_tokenlist **token, int in)
+{
+	char	*line;
     int     i;
+	char	*temp;
 
     i = 0;
-    in = open((*token)->next->token->value,
-			O_WRONLY | O_CREAT | O_TRUNC, 0664);
-    doc[i++] = readline("heredoc> ");
-    while (!ft_strncmp(doc, (*token)->token->value),
-            ft_strlen((*token)->token->value)) + 1);
+	line = NULL;
+    while (1)
     {
-       doc[i++] = readline("heredoc> ");
+	    temp = readline("> ");
+		if (!temp)
+			return ;
+		else if (temp[0] != 0)
+		{
+			if (verif_limiter(temp, (*token)->next->token->value) == 1)
+			{
+				ft_putstr_fd(line, in);
+				free(line);
+				(*token) = (*token)->next->next;
+				return ;
+			}
+			if (!line)
+				line = ft_strdup(temp);
+			else
+				line = ft_strjoin(line, temp);
+			free(temp);
+			line = ft_strjoin(line, "\n");
+		}
     }
-    doc[i] = NULL;
-    // Split et ecrire dans le fichier chaque line avec un \n a la fin
-    // return in, le fichier avec tout ce qui a ete ecrit dessus
-    i = 0;
-    while (doc[i])
-        ft_putstr_fd(doc[i++], in);
-    (*token) = (*token)->next->next;
-    return (in);
 }

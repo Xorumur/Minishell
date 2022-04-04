@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 16:27:20 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/04 20:47:11 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ void	exec(int redir, char **cmd, int in)
 			dup2(in, STDIN_FILENO);
 		if (redir != -1)
 			dup2(redir, STDOUT_FILENO);
+		if (search_path(cmd[0]) == NULL)
+			exit(1);
 		execve(search_path(cmd[0]), cmd, get_new_env());
-		close(redir);
-		close(in);
 	}
 	waitpid(id, NULL, 0);
 }
@@ -137,7 +137,10 @@ void	parsing(void)
 			tmp = tmp->next->next;
 		}
 		else if (tmp && tmp->token->e_type == 7)
-			in = heredoc(&tmp);
+		{
+			in = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0664);
+			heredoc(&tmp, in);
+		}
 	}
 	exec(redir, cmd, in);
 	free_tab(cmd);
