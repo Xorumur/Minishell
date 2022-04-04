@@ -22,6 +22,7 @@ SRCS =	main.c \
 		srcs/parsing/handle_error.c \
 		srcs/parsing/handle_error2.c \
 		srcs/parsing/fill_node.c \
+		srcs/parsing/parsing2.c 
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 14:03:29 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/04 16:57:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void	get_pwd(int fd);
 void	cmd_env(int fd);
 void	cmd_exit(int fd);
 void	cmd_unset(char *name);
+int		heredoc(t_tokenlist **token);
+
 
 /* === SIGNALS === */
 void	handle_sigquit(int sig);

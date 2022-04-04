@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 14:33:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/04 16:27:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,11 @@ void	parsing(void)
 		else if (tmp && tmp->token->e_type == 5)
 		{
 			in = open(tmp->next->token->value, O_RDONLY);
-			printf("File %s\n", tmp->next->token->value);		
-			printf("FD %i\n", in);
 			tmp = tmp->next->next;
 		}
+		else if (tmp && tmp->token->e_type == 7)
+			in = heredoc(&tmp);
 	}
 	exec(redir, cmd, in);
-	// close(in);
-	// close(redir);
 	free_tab(cmd);
 }
