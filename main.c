@@ -51,7 +51,10 @@ void	minishell(void)
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);
 	if (g_data.cmd == NULL)
+	{
+		free_tab(g_data.tab_env);
 		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
+	}
 	else if (!(g_data.cmd[0] == 0))
 	{
 		/*
@@ -61,12 +64,12 @@ void	minishell(void)
 		echo_control_seq(1);
 		g_data.lexer = init_lexer(g_data.cmd);
 		tokenizer();
-		// t_tokenlist* tmp = g_data.tokens;
-		// while (tmp)
-		// {
-		// 	printf("id = %i value = [%s]\n", tmp->token->e_type, tmp->token->value);
-		// 	tmp = tmp->next;
-		// }
+		t_tokenlist* tmp = g_data.tokens;
+		while (tmp)
+		{
+			printf("id = %i value = [%s]\n", tmp->token->e_type, tmp->token->value);
+			tmp = tmp->next;
+		}
 		// At the end of every commands free everything that is used for commands
 		// Free token list
 		if (g_data.env)
@@ -81,7 +84,6 @@ void	minishell(void)
 	signal(SIGQUIT, SIG_IGN);
 	if (g_data.cmd)
 		free(g_data.cmd);
-	// printf("AAA\n");
 }
 
 int	main(int argc, char **argv, char **env)

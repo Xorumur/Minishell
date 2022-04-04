@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/02 18:46:47 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 14:33:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,21 @@ int	verif_multiple_redir(t_tokenlist **token)
 	return (redir);
 }
 
-void	exec(int redir, char **cmd)
+void	exec(int redir, char **cmd, int in)
 {
 	int	id;
 
+	g_data.status.is_fork = TRUE;
 	id = fork();
 	if (id == 0)
 	{
-		if (dup2(redir, STDOUT_FILENO) < 0)
-			return ;
+		if (in != -1)
+			dup2(in, STDIN_FILENO);
+		if (redir != -1)
+			dup2(redir, STDOUT_FILENO);
 		execve(search_path(cmd[0]), cmd, get_new_env());
+		close(redir);
+		close(in);
 	}
 	waitpid(id, NULL, 0);
 }
@@ -113,8 +118,8 @@ void	parsing(void)
 	t_tokenlist	*tmp;
 	char		**cmd = NULL;
 	int			redir;
+	int			in;
 
-	redir = 1;
 	tmp = g_data.tokens;
 	if (handle_error_token() == -1)
 		return ;
@@ -126,13 +131,16 @@ void	parsing(void)
 		{
 			redir = verif_multiple_redir(&tmp);	
 		}
-		// printf("B\n");
+		else if (tmp && tmp->token->e_type == 5)
+		{
+			in = open(tmp->next->token->value, O_RDONLY);
+			printf("File %s\n", tmp->next->token->value);		
+			printf("FD %i\n", in);
+			tmp = tmp->next->next;
+		}
 	}
-	// printf("C\n");
-	// if (redir == 0)
-	// 	redir = 1;
-	// print_tab(cmd);
-	// printf("%i\n", redir);
-	// printf("\n");
-	exec(redir, cmd);
+	exec(redir, cmd, in);
+	// close(in);
+	// close(redir);
+	free_tab(cmd);
 }

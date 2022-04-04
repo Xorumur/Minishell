@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:55:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/02 16:00:12 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:56:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pipe_verif(t_tokenlist *tmp)
+int	pipe_verif(void)
 {
-	t_tokenlist *lst;
-
-	lst = tmp;
-		printf("syntax error near unexpected token '|'\n");
+	printf("syntax error near unexpected token '|'\n");
 	g_data.verif = TRUE;
 	return(-1);
 
@@ -76,13 +73,13 @@ int	dredirl_verif(t_tokenlist *tmp)
 	t_tokenlist *lst;
 
 	lst = tmp;
-	if (!tmp->prev)
+	if (!lst->prev)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		g_data.verif = TRUE;
 		return (-1);
 	}
-	else if (tmp->next == NULL)
+	else if (lst->next == NULL)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		g_data.verif = TRUE;
@@ -105,13 +102,15 @@ int	handle_error_token(void)
 	while (tmp)
 	{
 		if (tmp->token->e_type == 3)
-			r = pipe_verif(tmp);
+			r = pipe_verif();
 		else if (tmp->token->e_type == 6)
 			r = redir_verif(tmp);
 		else if (tmp->token->e_type == 8)
 			r = dredir_verif(tmp);
 		else if (tmp->token->e_type == 7)
 			r = dredirl_verif(tmp);
+		else if (tmp->token->e_type == 5)
+			r =	left_redirl_verif(tmp);
 		if (r == -1)
 			return (-1);
 		tmp = tmp->next;

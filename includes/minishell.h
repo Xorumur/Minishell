@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/02 18:34:01 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 14:03:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ t_data		g_data;
 void		rl_replace_line(const char *text, int clear_undo);
 void		parsing(void);
 int			handle_error_token(void);
+int			left_redirl_verif(t_tokenlist *tmp);
 char		*search_path(char *cmd);
 
 /* === ENV === */
