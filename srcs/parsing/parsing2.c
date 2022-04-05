@@ -45,3 +45,43 @@ void	heredoc(t_tokenlist **token, int in)
 		}
     }
 }
+
+void	write_fd(int fd)
+{
+	char	buf[2];
+	int		len;
+	char	*line;
+
+	len = read(fd, buf, 1);
+	buf[1] = '\0';
+	line = ft_strdup(buf);
+	len = read(fd, buf, 1);
+	buf[1] = '\0';
+	while (len > 0)
+	{
+		line = ft_strjoin(line, buf);
+		len = read(fd, buf, 1);
+		buf[1] = '\0';
+	}
+	ft_putstr_fd(line, fd);
+	free(line);
+}
+
+// int	is_builtins(char **cmd)
+// {
+// 	if (!ft_strncmp(cmd[0], "unset", ft_strlen("unset")))
+// 		cmd_unset(cmd[1]);
+// 	else if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
+// 		cmd_export(cmd[1], cmd[2]);
+// 	else if (!ft_strncmp(cmd[0], "cd", ft_strlen("cd")))
+// 		change_cd(cmd[1]);
+// 	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen("wd")))
+// 		get_pwd();
+// 	else if (!ft_strncmp(cmd[0], "env", ft_strlen("env")))
+// 		cmd_env();
+// 	else if (!ft_strncmp(cmd[0], "exit", ft_strlen("exit")))
+// 		cmd_exit();
+// 	else if (!ft_strncmp(cmd[0], "echo", ft_strlen("echo")))
+// 		cmd_echo(cmd[2], cmd[1]);
+// 	return (1);
+// }

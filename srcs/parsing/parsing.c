@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 20:47:11 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 23:36:24 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ char	**parser_cmd(t_tokenlist **token, char **cmd)
 	i = 0;
 	cmd = malloc(sizeof(char **) * 10);
 	// printf("Here %i\n", i);
-	while ((*token) != NULL && (*token)->token->e_type == 0)
+	while ((*token) != NULL && ((*token)->token->e_type == 0 ||
+			(*token)->token->e_type == 2 ||
+			(*token)->token->e_type == 9))
 	{
 		// printf("Here b %i\n", i);
 		cmd[i++] = ft_strdup((*token)->token->value);
@@ -97,18 +99,25 @@ int	verif_multiple_redir(t_tokenlist **token)
 void	exec(int redir, char **cmd, int in)
 {
 	int	id;
-
+	
+	// printf("in = %i | redir = %i\n", in, redir);
+	// printf("ici\n");
+	// print_tab(cmd);
 	g_data.status.is_fork = TRUE;
 	id = fork();
 	if (id == 0)
 	{
+		// printf("in = %i | redir = %i\n", in, redir);
 		if (in != -1)
 			dup2(in, STDIN_FILENO);
-		if (redir != -1)
+		if (redir != -1 && redir != 24640)
 			dup2(redir, STDOUT_FILENO);
 		if (search_path(cmd[0]) == NULL)
 			exit(1);
+		// if (is_builtins(cmd[0]) == 1)
+		// 	return ;
 		execve(search_path(cmd[0]), cmd, get_new_env());
+		close(in);
 	}
 	waitpid(id, NULL, 0);
 }
@@ -118,14 +127,20 @@ void	parsing(void)
 	t_tokenlist	*tmp;
 	char		**cmd = NULL;
 	int			redir;
-	int			in;
-
+	int			fd[2];
+	
+	fd[0] = 0;
+	fd[1] = 0;
+	redir = -1;
 	tmp = g_data.tokens;
+	// printf("in = %i | redir = %i\n", fd[0], redir);
 	if (handle_error_token() == -1)
 		return ;
 	while (tmp != NULL)
 	{
-		cmd = parser_cmd(&tmp, cmd);
+		if (tmp->token->e_type == 0 || tmp->token->e_type == 2 || tmp->token->e_type == 9) 
+			cmd = parser_cmd(&tmp, cmd);
+		// printf("token : %i | value : %s\n", tmp->token->e_type, tmp->token->value);
 		if (tmp && (tmp->token->e_type == 6 ||
 				tmp->token->e_type == 8))
 		{
@@ -133,15 +148,17 @@ void	parsing(void)
 		}
 		else if (tmp && tmp->token->e_type == 5)
 		{
-			in = open(tmp->next->token->value, O_RDONLY);
+			fd[0] = open(tmp->next->token->value, O_RDONLY);
+			write_fd(fd[0]);
 			tmp = tmp->next->next;
 		}
 		else if (tmp && tmp->token->e_type == 7)
 		{
-			in = open("tmp", O_RDWR | O_CREAT | O_TRUNC, 0664);
-			heredoc(&tmp, in);
+			pipe(fd);
+			heredoc(&tmp, fd[1]);
+			close(fd[1]);
 		}
 	}
-	exec(redir, cmd, in);
+	exec(redir, cmd, fd[0]);
 	free_tab(cmd);
 }

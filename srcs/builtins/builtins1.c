@@ -6,20 +6,20 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:58:09 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/01 18:49:04 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 22:38:34 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	get_pwd(int fd)
+void	get_pwd(void)
 {
 	char	pwd[1000];
 	char	*res;
 
 	res = getcwd(pwd, sizeof(pwd));
-	ft_putstr_fd(res, fd);
-	ft_putchar_fd('\n', fd);
+	ft_putstr_fd(res, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
 void	change_cd(char	*directory)
@@ -28,22 +28,22 @@ void	change_cd(char	*directory)
 		chdir(ft_getenv("HOME"));
 	else if (chdir(directory) == -1)
 	{
-		ft_putstr_fd(directory, 1);
-		ft_putchar_fd(':', 1);
-		ft_putstr_fd("No such file or directory\n", 1);
+		ft_putstr_fd(directory, STDERR_FILENO);
+		ft_putchar_fd(':', STDERR_FILENO);
+		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 	}
 	return ;
 }
 
-void	cmd_echo(char	*mess, int option, int fd)
+void	cmd_echo(char	*mess, char *option)
 {
-	ft_putstr_fd(mess, fd);
-	if (option == 1)
-		write(1, "\n", fd);
+	ft_putstr_fd(mess, STDOUT_FILENO);
+	if (!ft_strncmp(option, "-n", ft_strlen("-n")))
+		write(1, "\n", STDOUT_FILENO);
 	return ;
 }
 
-void	cmd_export(char	*name, char *content, int fd)
+void	cmd_export(char	*name, char *content)
 {
 	if (name)
 	{
@@ -52,7 +52,7 @@ void	cmd_export(char	*name, char *content, int fd)
 	}
 	else
 	{
-		print_env(g_data.env, fd);
+		print_env(g_data.env, STDOUT_FILENO);
 	}
 }
 

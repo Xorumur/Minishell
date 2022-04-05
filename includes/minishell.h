@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 19:51:44 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/04 23:00:48 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ typedef struct t_data {
 
 	t_pipe			*pipe;
 	char			**tab_env;
-
 	t_bool			verif;
 }	t_data;
 
@@ -124,6 +123,7 @@ void		parsing(void);
 int			handle_error_token(void);
 int			left_redirl_verif(t_tokenlist *tmp);
 char		*search_path(char *cmd);
+void		write_fd(int fd);
 
 /* === ENV === */
 void		init_data_env(char **env);
@@ -146,12 +146,12 @@ int			tab_size(char **t);
 
 
 /* === Builtins === */
-void	cmd_export(char	*name, char *content, int fd);
-void	cmd_echo(char	*mess, int option, int fd);
+void	cmd_export(char	*name, char *content);
+void	cmd_echo(char	*mess, char *option);
 void	change_cd(char	*directory);
-void	get_pwd(int fd);
-void	cmd_env(int fd);
-void	cmd_exit(int fd);
+void	get_pwd(void);
+void	cmd_env(void);
+void	cmd_exit(void);
 void	cmd_unset(char *name);
 void	heredoc(t_tokenlist **token, int in);
 
