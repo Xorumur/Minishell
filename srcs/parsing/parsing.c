@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 16:27:20 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/05 10:55:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@ char	*search_path(char *cmd)
 	if (!access(cmd, X_OK))
 			return (cmd);
 	tmp = ft_getenv("PATH");
-	paths = ft_split(tmp, ':'); //parsing_paths(cmd);
+	paths = ft_split(tmp, ':');
 	free(tmp);
-	// print_tab(paths);
 	i = 0;
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		filename = ft_strjoin(tmp, cmd);
-		// printf("%s\n", filename);
 		free(tmp);
 		if (!access(filename, X_OK))
 		{
@@ -53,13 +51,10 @@ char	**parser_cmd(t_tokenlist **token, char **cmd)
 
 	i = 0;
 	cmd = malloc(sizeof(char **) * 10);
-	// printf("Here %i\n", i);
 	while ((*token) != NULL && (*token)->token->e_type == 0)
 	{
-		// printf("Here b %i\n", i);
 		cmd[i++] = ft_strdup((*token)->token->value);
 		(*token) = (*token)->next;
-		// printf("A\n");
 	}
 	cmd[i] = NULL;
 	return (cmd);
