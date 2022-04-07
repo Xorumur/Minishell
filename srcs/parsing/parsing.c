@@ -39,7 +39,7 @@ char	**parser_cmd(t_tokenlist **token, char **cmd)
 	int	i;
 
 	i = 0;
-	cmd = malloc(sizeof(char **) * 10);
+	cmd = malloc(sizeof(char *) * 100);
 	// printf("Here %i\n", i);
 	while ((*token) != NULL && ((*token)->token->e_type == 0 ||
 			(*token)->token->e_type == 2 ||
@@ -93,6 +93,11 @@ void	exec(int redir, char **cmd, int in)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(1);
 	}
+	if (builtins(cmd[0]) == 1)
+	{
+		is_builtins(cmd, redir, in);
+		return ;
+	}
 	id = fork();
 	if (id == 0)
 	{
@@ -101,8 +106,8 @@ void	exec(int redir, char **cmd, int in)
 			dup2(in, STDIN_FILENO);
 		if (redir != -1 && redir != 24640)
 			dup2(redir, STDOUT_FILENO);
-		if (is_builtins(cmd) == 1)
-			exit(1);
+		// if (is_builtins(cmd) == 1)
+		// 	exit(1);
 		if (search_path(cmd[0]) == NULL)
 			exit(1);
 		g_data.exec = execve(search_path(cmd[0]), cmd, get_new_env());
@@ -151,7 +156,7 @@ void	parsing(void)
 			heredoc(&tmp, fd[1]);
 			close(fd[1]);
 		}
-		if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
+		else if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
 		{
 			export_cmd();
 			return ;
@@ -161,6 +166,7 @@ void	parsing(void)
 	}
 	printf("Here tab\n");
 	print_tab(cmd);
+	printf("====\n");
 	if (cmd)
 	{
 		exec(redir, cmd, fd[0]);

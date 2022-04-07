@@ -68,13 +68,37 @@ void	write_fd(char *path, int fd)
 	free(line);
 }
 
-int	is_builtins(char **cmd)
+int	builtins(char *cmd)
+{
+	int	retour;
+
+	retour = 0;
+	if (!ft_strncmp(cmd, "unset", ft_strlen("unset"))) // FAIT
+    	retour = 1;
+	else if (!ft_strncmp(cmd, "export", ft_strlen("export")))
+		retour = 1;
+	else if (!ft_strncmp(cmd, "cd", ft_strlen("cd"))) // FAIT
+        retour = 1;
+	else if (!ft_strncmp(cmd, "pwd", ft_strlen("pwd"))) // FAIT
+    	retour = 1;
+	else if (!ft_strncmp(cmd, "env", ft_strlen("env"))) // FAIT
+		retour = 1;
+	else if (!ft_strncmp(cmd, "echo", ft_strlen("echo"))) // FAIT
+		retour = 1;
+	return (retour);
+}
+
+int	is_builtins(char **cmd, int redir, int in)
 {
     int retour;
 
     retour = 0;
+	if (in != -1)
+		dup2(in, STDIN_FILENO);
+	if (redir != -1 && redir != 24640)
+		dup2(redir, STDOUT_FILENO);
 	if (!ft_strncmp(cmd[0], "unset", ft_strlen("unset"))) // FAIT
-    	retour = cmd_unset(cmd[1]);
+    	retour = cmd_unset(cmd);
 	else if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
 		retour = export_cmd();
 	else if (!ft_strncmp(cmd[0], "cd", ft_strlen("cd"))) // FAIT

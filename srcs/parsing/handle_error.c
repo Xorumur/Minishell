@@ -4,6 +4,7 @@ int	pipe_verif(void)
 {
 	printf("syntax error near unexpected token '|'\n");
 	g_data.verif = TRUE;
+	g_data.exec = 258;
 	return(-1);
 
 }
@@ -17,12 +18,14 @@ int	redir_verif(t_tokenlist *tmp)
 	{
 		printf("syntax error near unexpected token '%s'\n", tmp->next->token->value);
 		g_data.verif = TRUE;
+		g_data.exec = 258;
 		return(-1);
 	}
 	else if (tmp->next == NULL)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
 		g_data.verif = TRUE;
+		g_data.exec = 258;
 		return (-1);
 	}
 	else
@@ -41,12 +44,14 @@ int	dredir_verif(t_tokenlist *tmp)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
 		g_data.verif = TRUE;
+		g_data.exec = 258;
 		return (-1);
 	}
 	else if (lst->next && lst->next->token->e_type != 0)
 	{
 		printf("syntax error near unexpected token '%s'\n", tmp->next->token->value);
 		g_data.verif = TRUE;
+		g_data.exec = 258;
 		return(-1);
 	}
 	else
@@ -71,6 +76,7 @@ int	dredirl_verif(t_tokenlist *tmp)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		g_data.verif = TRUE;
+		g_data.exec = 258;
 		return (-1);
 	}
 	else

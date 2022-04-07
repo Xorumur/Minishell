@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:58:09 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/07 14:40:46 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/07 19:17:36 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,5 @@ int	cmd_export(char	*name, char *content)
 		print_env(g_data.env, STDOUT_FILENO);
 	}
 	printf("Here export\n");
-	return (1);
-}
-
-int	cmd_unset(char *name)
-{
-	t_env	*tmp;
-	t_env	*del;
-
-	tmp = g_data.env;
-	if (name == NULL)
-		return (1);
-	while (tmp)
-	{
-		if (!ft_strncmp(name, tmp->name, ft_strlen(name) + 1))
-		{
-			del = tmp;
-			tmp->prev->next = tmp->next;
-			free(del);
-			return (1) ;
-		}
-		tmp = tmp->next;
-	}
 	return (1);
 }

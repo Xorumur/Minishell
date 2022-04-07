@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/07 13:51:20 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/07 20:48:07 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ int			left_redirl_verif(t_tokenlist *tmp);
 char		*search_path(char *cmd);
 void		write_fd(char *path, int fd);
 // void		boucle_redirection_file(t_tokenlist **tmp);
-int			is_builtins(char **cmd);
+int			is_builtins(char **cmd, int redir, int in);
 int			checker_arg(t_tokenlist *lst);
-void		handle_equal(char **cmd);
-
+// void		handle_equal(char **cmd);
+int			env_exist(char *name);
 
 /* === ENV === */
 void		init_data_env(char **env);
@@ -158,10 +158,10 @@ int		change_cd(char	**directory);
 int		get_pwd(void);
 int		cmd_env(void);
 int		cmd_exit(void);
-int		cmd_unset(char *name);
+int		cmd_unset(char **cmd);
 void	heredoc(t_tokenlist **token, int in);
 int		export_cmd(void);
-
+int		builtins(char *cmd);
 
 /* === SIGNALS === */
 void	handle_sigquit(int sig);
