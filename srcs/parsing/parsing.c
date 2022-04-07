@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 11:25:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/05 10:55:54 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 char	*search_path(char *cmd)
@@ -38,6 +26,7 @@ char	*search_path(char *cmd)
 		i++;
 		free(filename);
 	}
+	free_tab(g_data.tab_env);
 	ft_putstr_fd("Minishell: ",STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
@@ -51,7 +40,10 @@ char	**parser_cmd(t_tokenlist **token, char **cmd)
 
 	i = 0;
 	cmd = malloc(sizeof(char **) * 10);
-	while ((*token) != NULL && (*token)->token->e_type == 0)
+	// printf("Here %i\n", i);
+	while ((*token) != NULL && ((*token)->token->e_type == 0 ||
+			(*token)->token->e_type == 2 ||
+			(*token)->token->e_type == 9))
 	{
 		cmd[i++] = ft_strdup((*token)->token->value);
 		(*token) = (*token)->next;
@@ -92,18 +84,31 @@ int	verif_multiple_redir(t_tokenlist **token)
 void	exec(int redir, char **cmd, int in)
 {
 	int	id;
-
+	// printf("in = %i | redir = %i\n", in, redir);
+	// printf("ici\n");
+	// print_tab(cmd);
 	g_data.status.is_fork = TRUE;
+	if (!ft_strncmp(cmd[0], "exit", ft_strlen("exit")))\
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit(1);
+	}
 	id = fork();
 	if (id == 0)
 	{
+		// printf("in = %i | redir = %i\n", in, redir);
 		if (in != -1)
 			dup2(in, STDIN_FILENO);
-		if (redir != -1)
+		if (redir != -1 && redir != 24640)
 			dup2(redir, STDOUT_FILENO);
-		execve(search_path(cmd[0]), cmd, get_new_env());
-		close(redir);
+		if (is_builtins(cmd) == 1)
+			exit(1);
+		if (search_path(cmd[0]) == NULL)
+			exit(1);
+		g_data.exec = execve(search_path(cmd[0]), cmd, get_new_env());
 		close(in);
+		if (redir)
+			close(redir);
 	}
 	waitpid(id, NULL, 0);
 }
@@ -113,14 +118,20 @@ void	parsing(void)
 	t_tokenlist	*tmp;
 	char		**cmd = NULL;
 	int			redir;
-	int			in;
-
+	int			fd[2];
+	
+	fd[0] = 0;
+	fd[1] = 0;
+	redir = -1;
 	tmp = g_data.tokens;
+	// printf("in = %i | redir = %i\n", fd[0], redir);
 	if (handle_error_token() == -1)
 		return ;
 	while (tmp != NULL)
 	{
-		cmd = parser_cmd(&tmp, cmd);
+		if (tmp->token->e_type == 0 || tmp->token->e_type == 2 || tmp->token->e_type == 9) 
+			cmd = parser_cmd(&tmp, cmd);
+		// printf("token : %i | value : %s\n", tmp->token->e_type, tmp->token->value);
 		if (tmp && (tmp->token->e_type == 6 ||
 				tmp->token->e_type == 8))
 		{
@@ -128,12 +139,31 @@ void	parsing(void)
 		}
 		else if (tmp && tmp->token->e_type == 5)
 		{
-			in = open(tmp->next->token->value, O_RDONLY);
+			pipe(fd);
+			// boucler pour prendre le dernier file.
+			write_fd(tmp->next->token->value, fd[1]);
+			close(fd[1]);
 			tmp = tmp->next->next;
 		}
 		else if (tmp && tmp->token->e_type == 7)
-			in = heredoc(&tmp);
+		{
+			pipe(fd);
+			heredoc(&tmp, fd[1]);
+			close(fd[1]);
+		}
+		if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
+		{
+			export_cmd();
+			return ;
+		}
+		else if (tmp)
+			tmp = tmp->next;
 	}
-	exec(redir, cmd, in);
-	free_tab(cmd);
+	printf("Here tab\n");
+	print_tab(cmd);
+	if (cmd)
+	{
+		exec(redir, cmd, fd[0]);
+		free_tab(cmd);
+	}
 }

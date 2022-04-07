@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 16:57:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/07 13:51:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stddef.h>
 # include <unistd.h>
 # include <signal.h>
 # include <fcntl.h>
@@ -111,7 +112,6 @@ typedef struct t_data {
 
 	t_pipe			*pipe;
 	char			**tab_env;
-
 	t_bool			verif;
 }	t_data;
 
@@ -124,6 +124,12 @@ void		parsing(void);
 int			handle_error_token(void);
 int			left_redirl_verif(t_tokenlist *tmp);
 char		*search_path(char *cmd);
+void		write_fd(char *path, int fd);
+// void		boucle_redirection_file(t_tokenlist **tmp);
+int			is_builtins(char **cmd);
+int			checker_arg(t_tokenlist *lst);
+void		handle_equal(char **cmd);
+
 
 /* === ENV === */
 void		init_data_env(char **env);
@@ -146,14 +152,15 @@ int			tab_size(char **t);
 
 
 /* === Builtins === */
-void	cmd_export(char	*name, char *content, int fd);
-void	cmd_echo(char	*mess, int option, int fd);
-void	change_cd(char	*directory);
-void	get_pwd(int fd);
-void	cmd_env(int fd);
-void	cmd_exit(int fd);
-void	cmd_unset(char *name);
-int		heredoc(t_tokenlist **token);
+int		cmd_export(char	*name, char *content);
+int		cmd_echo(char	**cmd);
+int		change_cd(char	**directory);
+int		get_pwd(void);
+int		cmd_env(void);
+int		cmd_exit(void);
+int		cmd_unset(char *name);
+void	heredoc(t_tokenlist **token, int in);
+int		export_cmd(void);
 
 
 /* === SIGNALS === */

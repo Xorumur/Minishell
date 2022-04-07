@@ -82,7 +82,7 @@ t_token	*lexer_collect_string(t_lexer *lexer)
 		{
 			g_data.quoterror = TRUE;
 			free(values);
-			return (init_token(TK_STRING, ""));
+			return (init_token(TK_STRING, NULL));
 		}
 		values = lexer_collect_string_two(lexer, values, NULL);
 	}

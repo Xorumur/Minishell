@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 14:55:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/05 11:05:48 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 int	pipe_verif(void)
@@ -73,13 +61,13 @@ int	dredirl_verif(t_tokenlist *tmp)
 	t_tokenlist *lst;
 
 	lst = tmp;
-	if (!lst->prev)
-	{
-		printf("syntax error near unexpected token `newline'\n");
-		g_data.verif = TRUE;
-		return (-1);
-	}
-	else if (lst->next == NULL)
+	// if (!lst->prev)
+	// {
+	// 	printf("syntax error near unexpected token `newline'\n");
+	// 	g_data.verif = TRUE;
+	// 	return (-1);
+	// }
+	if (lst->next == NULL)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		g_data.verif = TRUE;
@@ -99,6 +87,8 @@ int	handle_error_token(void)
 
 	r = 0;
 	tmp = g_data.tokens;
+	if (checker_arg(tmp) == 0)
+		return (-1);
 	while (tmp)
 	{
 		if (tmp->token->e_type == 3)

@@ -1,5 +1,16 @@
-#include "../../includes/minishell.h"\
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_error2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 21:44:13 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/04 21:44:13 by mlecherb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../includes/minishell.h"\
 
 int left_redirl_verif(t_tokenlist *tmp)
 {
@@ -23,4 +34,24 @@ int left_redirl_verif(t_tokenlist *tmp)
 		g_data.verif = FALSE;
 		return (0);
 	}
+}
+
+int	checker_arg(t_tokenlist *lst)
+{
+	t_tokenlist *tmp;
+	int			count;
+
+	count = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->token->e_type == 0 ||
+			tmp->token->e_type == 2 ||
+			tmp->token->e_type == 9)
+		{
+			count++;
+		}
+		tmp = tmp->next;
+	}
+	return (count);
 }

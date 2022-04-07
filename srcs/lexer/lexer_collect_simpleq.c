@@ -26,7 +26,7 @@ t_token	*lexer_collect_simpleq(t_lexer *lexer)
 		{
 			g_data.quoterror = 1;
 			free(values);
-			return (init_token(TK_SIMPLQ, ""));
+			return (init_token(TK_SIMPLQ, NULL));
 		}
 		values = lexer_collect_simplq_two(lexer, values, NULL);
 	}

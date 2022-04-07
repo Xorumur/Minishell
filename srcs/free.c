@@ -24,7 +24,8 @@ void	delete_linked_list(t_tokenlist **token)
 	while (current)
 	{
 		next = current->next;
-		free(current->token->value);
+		if (current && current->token && current->token->value)
+			free(current->token->value);
 		free(current->token);
 		free(current);
 		current = next;
@@ -53,7 +54,9 @@ void	free_pipe(t_pipe **token)
 
 void	free_all(void)
 {
-	free(g_data.lexer);
-	delete_linked_list(&g_data.tokens);
+	if (g_data.lexer)
+		free(g_data.lexer);
+	if (g_data.tokens)
+		delete_linked_list(&g_data.tokens);
 	// free_pipe(&g_data.pipe);
 }

@@ -45,14 +45,14 @@ void	minishell(void)
 {
 	init_data();
 	echo_control_seq(0);
-	// if (g_data.verif == TRUE)
-	// 	printf("\n");
 	g_data.cmd = readline("|---Mathiew * minishell---$> ");
 	if (g_data.cmd && ft_strlen(g_data.cmd))
 		add_history(g_data.cmd);
 	if (g_data.cmd == NULL)
 	{
+		// free_all();
 		free_tab(g_data.tab_env);
+		// while (1) ;
 		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
 	}
 	else if (!(g_data.cmd[0] == 0))
