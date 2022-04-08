@@ -108,6 +108,9 @@ int	is_builtins(char **cmd, int redir, int in)
 	else if (!ft_strncmp(cmd[0], "env", ft_strlen("env"))) // FAIT
 		retour = cmd_env();
 	else if (!ft_strncmp(cmd[0], "echo", ft_strlen("echo"))) // FAIT
-		retour = cmd_echo(cmd);
+	{
+		printf("SALUT ICI ECHO\n");
+		retour = echo_cmd();
+	}
 	return (retour);
 }

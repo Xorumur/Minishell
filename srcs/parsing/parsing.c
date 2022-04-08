@@ -164,9 +164,9 @@ void	parsing(void)
 		else if (tmp)
 			tmp = tmp->next;
 	}
-	printf("Here tab\n");
-	print_tab(cmd);
-	printf("====\n");
+	// printf("Here tab\n");
+	// print_tab(cmd);
+	// printf("====\n");
 	if (cmd)
 	{
 		exec(redir, cmd, fd[0]);

@@ -17,7 +17,6 @@ SRCS =	main.c \
 		srcs/lexer/lexer_collect_simpleq.c \
 		srcs/lexer/lexer_collect_string.c \
 		srcs/lexer/lexer_utils.c \
-		srcs/parsing/exec_line.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/handle_error.c \
 		srcs/parsing/handle_error2.c \
@@ -25,6 +24,7 @@ SRCS =	main.c \
 		srcs/parsing/parsing2.c \
 		srcs/builtins/export.c \
 		srcs/builtins/export2.c \
+		srcs/builtins/echo.c \
 
 OBJS = $(SRCS:.c=.o)
 
