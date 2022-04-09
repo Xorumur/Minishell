@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	*search_path(char *cmd)
+char	*search_path(char *cmd, int id)
 {
 	int		i;
 	char	*tmp;
@@ -9,7 +9,7 @@ char	*search_path(char *cmd)
 
 	if (!access(cmd, X_OK))
 			return (cmd);
-	tmp = ft_getenv("PATH");
+	tmp = ft_strdup(ft_getenv("PATH"));
 	paths = ft_split(tmp, ':');
 	free(tmp);
 	i = 0;
@@ -26,10 +26,13 @@ char	*search_path(char *cmd)
 		i++;
 		free(filename);
 	}
-	free_tab(g_data.tab_env);
-	ft_putstr_fd("Minishell: ",STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	// free_tab(g_data.tab_env);
+	if (id == 0)
+	{
+		ft_putstr_fd("Minishell: ",STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	}
 	free_tab(paths);
 	return (NULL);
 }
@@ -87,6 +90,8 @@ void	exec(int redir, char **cmd, int in)
 	// printf("in = %i | redir = %i\n", in, redir);
 	// printf("ici\n");
 	// print_tab(cmd);
+
+
 	g_data.status.is_fork = TRUE;
 	if (!ft_strncmp(cmd[0], "exit", ft_strlen("exit")))\
 	{
@@ -95,7 +100,25 @@ void	exec(int redir, char **cmd, int in)
 	}
 	if (builtins(cmd[0]) == 1)
 	{
-		is_builtins(cmd, redir, in);
+		id = fork();
+		if (id == 0)
+		{
+				if (in != -1)
+			dup2(in, STDIN_FILENO);
+			if (redir != -1 && redir != 24640)
+				dup2(redir, STDOUT_FILENO);
+			is_builtins(cmd);
+			if (redir)
+				close(redir);
+			close(in);
+			exit(1);
+		}
+		waitpid(id, NULL, 0);
+		return ;
+	}
+	if (search_path(cmd[0], 0) == NULL)
+	{
+		g_data.exec = 127;
 		return ;
 	}
 	id = fork();
@@ -106,14 +129,16 @@ void	exec(int redir, char **cmd, int in)
 			dup2(in, STDIN_FILENO);
 		if (redir != -1 && redir != 24640)
 			dup2(redir, STDOUT_FILENO);
-		// if (is_builtins(cmd) == 1)
+		// if (search_path(cmd[0], id) == NULL)
+		// {
+		// 	g_data.exec = 127;
 		// 	exit(1);
-		if (search_path(cmd[0]) == NULL)
-			exit(1);
-		g_data.exec = execve(search_path(cmd[0]), cmd, get_new_env());
+		// }
+		g_data.exec = execve(search_path(cmd[0], 1), cmd, get_new_env());
 		close(in);
 		if (redir)
 			close(redir);
+		exit(1);
 	}
 	waitpid(id, NULL, 0);
 }
@@ -169,7 +194,11 @@ void	parsing(void)
 	// printf("====\n");
 	if (cmd)
 	{
+		// printf("Before execv\n");
 		exec(redir, cmd, fd[0]);
+		// printf("After exec\n");
+		// close(redir);
+		// close(fd[0]);
 		free_tab(cmd);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/08 12:44:00 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/09 20:33:10 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,10 @@ void		rl_replace_line(const char *text, int clear_undo);
 void		parsing(void);
 int			handle_error_token(void);
 int			left_redirl_verif(t_tokenlist *tmp);
-char		*search_path(char *cmd);
+char		*search_path(char *cmd, int id);
 void		write_fd(char *path, int fd);
-// void		boucle_redirection_file(t_tokenlist **tmp);
-int			is_builtins(char **cmd, int redir, int in);
+int			is_builtins(char **cmd);
 int			checker_arg(t_tokenlist *lst);
-// void		handle_equal(char **cmd);
 int			env_exist(char *name);
 
 /* === ENV === */
@@ -152,8 +150,6 @@ int			tab_size(char **t);
 
 
 /* === Builtins === */
-int		cmd_export(char	*name, char *content);
-int		cmd_echo(char	**cmd);
 int		change_cd(char	**directory);
 int		get_pwd(void);
 int		cmd_env(void);

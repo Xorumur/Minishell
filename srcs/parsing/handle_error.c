@@ -19,9 +19,16 @@ int	redir_verif(t_tokenlist *tmp)
 		printf("syntax error near unexpected token '%s'\n", tmp->next->token->value);
 		g_data.verif = TRUE;
 		g_data.exec = 258;
-		return(-1);
+		return (-1);
 	}
 	else if (tmp->next == NULL)
+	{
+		printf("syntax error near unexpected token 'newline'\n");
+		g_data.verif = TRUE;
+		g_data.exec = 258;
+		return (-1);
+	}
+	else if (!tmp->next)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
 		g_data.verif = TRUE;
@@ -93,8 +100,8 @@ int	handle_error_token(void)
 
 	r = 0;
 	tmp = g_data.tokens;
-	if (checker_arg(tmp) == 0)
-		return (-1);
+	// if (checker_arg(tmp) == 0)
+	// 	return (-1);
 	while (tmp)
 	{
 		if (tmp->token->e_type == 3)

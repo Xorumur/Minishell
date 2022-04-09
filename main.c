@@ -51,7 +51,7 @@ void	minishell(void)
 	if (g_data.cmd == NULL)
 	{
 		// free_all();
-		free_tab(g_data.tab_env);
+		// free_tab(g_data.tab_env);
 		// while (1) ;
 		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
 	}

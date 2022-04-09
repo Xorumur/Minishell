@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   echo2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 12:29:02 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/08 15:44:29 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/09 18:57:51 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	echo_cmd(void)
 	cmd = g_data.cmd;
 	while (i < ft_strlen("echo"))
 		i++;
+	if (!cmd[i])
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (1);
+	}
 	while (cmd[i] && ft_iswspace(cmd[i]) == 1)
 		i++;
 	tmp = tmp->next;
@@ -41,44 +46,49 @@ int	echo_cmd(void)
 	{
 		tmp = tmp->next;
 		o = 1;
-		while (ft_iswspace(cmd[i]) != 1)
+		while (cmd[i] && ft_iswspace(cmd[i]) != 1)
 			i++;
-		while (ft_iswspace(cmd[i]) == 1)
+		while (cmd[i] && ft_iswspace(cmd[i]) == 1)
 			i++;
 	}
 	// printf("line %s\n", cmd + i);
 	// printf("value : %s | type : %i \n", tmp->token->value, tmp->token->e_type);
-	// printf("value : %s | type : %i \n", tmp->next->token->value, tmp->next->token->e_type);
-	while (cmd[i])
+	// if (tmp->next)
+	// 	printf("value : %s | type : %i \n", tmp->next->token->value, tmp->next->token->e_type);
+	while (cmd[i] && tmp->token->e_type != 5 && tmp->token->e_type != 6 &&
+			tmp->token->e_type != 8 && tmp->token->e_type != 7)
 	{
-		// printf("\nline %s\n", cmd + i);
-		while (cmd[i] && ft_isprint(cmd[i]) > 0 && ft_iswspace(cmd[i]) != 1 && ft_isquote(cmd[i]) != 1)
-			i++;
-		// if (ft_isquote(cmd[i]) != 1)
-			ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
-		if (tmp->next)
-			tmp = tmp->next;
-		while (cmd[i] && ft_iswspace(cmd[i]) == 1)
+		// printf("X\n");
+		if (cmd[i] && ft_isquote(cmd[i]) == 1)
 		{
-			ft_putchar_fd(cmd[i], STDOUT_FILENO);
-			while (cmd[i] && ft_iswspace(cmd[i]) == 1)
-				i++;
-		}
-		if (cmd[i] && ft_isquote(cmd[i]) == 1 && tmp->next)
-		{
-			ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
-			if (tmp->next)
+			if (tmp)
+				ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
+			if (tmp && tmp->next)
 				tmp = tmp->next;
 			i++;
 			while (cmd[i] && ft_isquote(cmd[i]) != 1)
 				i++;
-			// printf("line %s\n", cmd + i);
-		}
-		if (cmd[i] && cmd[i] == '\0')
-			break ;
-		else
 			i++;
-		// printf("line %s\n", cmd + i);
+		}
+		else
+		{
+			if (tmp)
+				ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
+			if (tmp && tmp->next)
+				tmp = tmp->next;
+			else 
+				tmp = NULL;
+			while (cmd[i] && ft_isprint(cmd[i]) > 0 && ft_iswspace(cmd[i]) != 1 && ft_isquote(cmd[i]) != 1)
+				i++;
+		}
+		if (cmd[i] && ft_iswspace(cmd[i]) == 1)
+		{
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			i++;
+			while (cmd[i] && ft_iswspace(cmd[i]) == 1)
+				i++;
+		}
+		// printf("line : %s\n", cmd + i);
 	}
 	if (o == -1)
 		ft_putchar_fd('\n', STDOUT_FILENO);

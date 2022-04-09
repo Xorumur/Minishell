@@ -52,11 +52,15 @@ void	write_fd(char *path, int fd)
     int     fdin;
 
     fdin = open(path, O_RDONLY);
+	if (fdin == -1)
+	{
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return ;
+	}
 	len = read(fdin, buf, 1);
 	buf[1] = '\0';
 	line = ft_strdup(buf);
-	len = read(fdin, buf, 1);
-	buf[1] = '\0';
 	while (len > 0)
 	{
 		line = ft_strjoin(line, buf);
@@ -88,15 +92,15 @@ int	builtins(char *cmd)
 	return (retour);
 }
 
-int	is_builtins(char **cmd, int redir, int in)
+int	is_builtins(char **cmd)
 {
     int retour;
 
     retour = 0;
-	if (in != -1)
-		dup2(in, STDIN_FILENO);
-	if (redir != -1 && redir != 24640)
-		dup2(redir, STDOUT_FILENO);
+	// if (in != -1)
+	// 	dup2(in, STDIN_FILENO);
+	// if (redir != -1 && redir != 24640)
+	// 	dup2(redir, STDOUT_FILENO);
 	if (!ft_strncmp(cmd[0], "unset", ft_strlen("unset"))) // FAIT
     	retour = cmd_unset(cmd);
 	else if (!ft_strncmp(cmd[0], "export", ft_strlen("export")))
@@ -108,9 +112,10 @@ int	is_builtins(char **cmd, int redir, int in)
 	else if (!ft_strncmp(cmd[0], "env", ft_strlen("env"))) // FAIT
 		retour = cmd_env();
 	else if (!ft_strncmp(cmd[0], "echo", ft_strlen("echo"))) // FAIT
-	{
-		printf("SALUT ICI ECHO\n");
 		retour = echo_cmd();
-	}
+	// if (redir != -1)
+		// close(redir);
+	// if (in != -1)
+	// 	close(in);
 	return (retour);
 }
