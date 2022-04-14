@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/04 14:45:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/14 17:22:10 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_getenv(char *name)
 	tmp = g_data.env;
 	while (g_data.env)
 	{
-		if (!ft_strncmp(name, g_data.env->name, ft_strlen(g_data.env->name) + 1))
+		if (!ft_strncmp(name, g_data.env->name, ft_strlen(name) + 1))
 		{
 			if (g_data.env->content)
 				content = ft_strdup(g_data.env->content);

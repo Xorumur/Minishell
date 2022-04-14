@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:22:36 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/07 20:53:35 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:57:14 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	cmd_unset(char **cmd)
 		printf("unset arg : %s\n", cmd[i]);
 		while (env)
 		{
-			if (!ft_strncmp(cmd[i], env->next->name, ft_strlen(env->next->name)))
+			if (!ft_strncmp(cmd[i], env->next->name, ft_strlen(cmd[i])))
 			{
 				tmp = env->next;
 				env->next = env->next->next;

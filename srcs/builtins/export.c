@@ -17,9 +17,10 @@ void	ft_swap_env_content(char *name, char *content)
 	tmp = g_data.env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
+		if (!ft_strncmp(tmp->name, name, ft_strlen(tmp->name)))
 		{
-			// free(content);
+			free(tmp->content);
+			tmp->content = NULL;
 			tmp->content = ft_strdup(content);
 			return ;
 		}
@@ -59,6 +60,7 @@ int export_cmd(void)
         print_env(g_data.env, STDOUT_FILENO);
         return(1);
     }
+	tmp = tmp->next;
 	while (cmd[i])
 	{
 		content = NULL;
@@ -104,7 +106,10 @@ int export_cmd(void)
 			ft_lstadd_back_env(&g_data.env, ft_lstnew_env(ft_strdup(new_env), ft_strdup(content)));
 		else
 			ft_swap_env_content(new_env, content);
+		free(new_env);
 		new_env = NULL;
+		// free(content);
+		// free(new_env);
 	}
 	free(new_env);
 	if (content)

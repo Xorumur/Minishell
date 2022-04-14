@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo2.c                                            :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/09 18:57:51 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/14 21:32:17 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	echo_cmd(void)
 	}
 	while (cmd[i] && ft_iswspace(cmd[i]) == 1)
 		i++;
-	tmp = tmp->next;
+	if (tmp->next)
+		tmp = tmp->next;
 	if (!ft_strncmp(tmp->token->value, "-n", ft_strlen("-n")))
 	{
 		tmp = tmp->next;
@@ -58,7 +59,6 @@ int	echo_cmd(void)
 	while (cmd[i] && tmp->token->e_type != 5 && tmp->token->e_type != 6 &&
 			tmp->token->e_type != 8 && tmp->token->e_type != 7)
 	{
-		// printf("X\n");
 		if (cmd[i] && ft_isquote(cmd[i]) == 1)
 		{
 			if (tmp)
@@ -88,7 +88,6 @@ int	echo_cmd(void)
 			while (cmd[i] && ft_iswspace(cmd[i]) == 1)
 				i++;
 		}
-		// printf("line : %s\n", cmd + i);
 	}
 	if (o == -1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
