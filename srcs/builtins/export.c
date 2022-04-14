@@ -76,13 +76,23 @@ int export_cmd(void)
 		}
 		new_env[j] = '\0';
 		if (!cmd[i])
+		{
+			free(new_env);
 			return (1);
+		}
 		if (cmd[i] == ' ')
 		{
 			if (tmp->next)
+			{
+				free(new_env);
+				new_env = NULL;
 				continue ;
-			else 
+			}
+			else
+			{
+				free(new_env);
 				return (1);
+			}
 		}
 		else if (cmd[i] == '=')
 			i++;
@@ -108,7 +118,8 @@ int export_cmd(void)
 			ft_swap_env_content(new_env, content);
 		free(new_env);
 		new_env = NULL;
-		// free(content);
+		free(content);
+		content = NULL;
 		// free(new_env);
 	}
 	free(new_env);
