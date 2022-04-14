@@ -88,11 +88,16 @@ int export_cmd(void)
 			j++;
 		}
 		new_env[j] = '\0';
-		if (!cmd[i])
+		if (!cmd[i] || tmp->token->value[0] == 0)
 		{
-			free(new_env);
+			if (new_env)
+				free(new_env);
 			return (1);
 		}
+		// else if (tmp->token->value[0] == 0)
+		// {
+		// 	continue ;
+		// }
 		if (cmd[i] == ' ')
 		{
 			if (tmp->next)
@@ -126,7 +131,8 @@ int export_cmd(void)
 			{
 				while (cmd[i] && ft_isquote(cmd[++i]) != 1)
 					i++;
-				i++;
+				if (cmd[i + 1])
+					i++;
 			}
 			else 
 			{

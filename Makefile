@@ -1,7 +1,7 @@
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS =	main.c \
 		srcs/free.c \

@@ -1,0 +1,14 @@
+Makefile
+a
+b
+c
+d
+includes
+libft
+main.c
+main.o
+minishell
+srcs
+test
+to_fix
+tutorial_multipipes.c

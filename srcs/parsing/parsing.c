@@ -8,7 +8,7 @@ char	*search_path(char *cmd, int id)
 	char	**paths;
 
 	if (!access(cmd, X_OK))
-		return (cmd);
+		return (ft_strdup(cmd));
 	tmp = ft_getenv("PATH");
 	paths = ft_split(tmp, ':');
 	free(tmp);
@@ -211,6 +211,8 @@ void	parsing(void)
 		// printf("After exec\n");
 		// close(redir);
 		// close(fd[0]);
+		// print_tab(cmd);
+		free_tab(cmd);
 	}
-	free_tab(cmd);
+	// free_tab(cmd);
 }

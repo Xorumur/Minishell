@@ -23,6 +23,8 @@ t_token	*init_token(int type, char *value)
 {
 	t_token	*token;
 
+	// if (!value)
+	// 	return NULL;
 	token = malloc(sizeof(t_token));
 	if (!token)
 		exit(127);

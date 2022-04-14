@@ -28,6 +28,8 @@ char	*lexer_dollar_id(t_lexer *lexer, char *values, char *s)
 		alphastr = get_alpha_string(lexer);
 		s = ft_getenv(alphastr);
 		free(alphastr);
+		// if (!s)
+		// 	return NULL;
 		values = ft_realloc(values, (ft_strlen(values) + ft_strlen(s) + 1));
 		ft_strlcat(values, s, ft_strlen(values) + ft_strlen(s) + 1);
 		free(s);
