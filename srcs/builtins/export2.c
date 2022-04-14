@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:44:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/07 17:48:02 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/14 22:52:20 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	env_exist(char *name)
 	tmp = g_data.env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen("name")))
+		if (!ft_strncmp(tmp->name, name, ft_strlen(tmp->name)))
 			return (1);
 		tmp = tmp->next;
 	}

@@ -34,6 +34,7 @@ char	*lexer_dollar_id(t_lexer *lexer, char *values, char *s)
 	}
 	else if (lexer->c == '?')
 	{
+		free(values);
 		values = ft_itoa(g_data.exec);
 		lexer_advance(lexer);
 	}

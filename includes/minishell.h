@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 20:43:27 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/14 22:26:51 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int			verif_multiple_redir(t_tokenlist **token);
 int			tab_size(char **t);
 char		*ft_strjoin_h(char *s1, char *s2);
 char		*ft_strjoin_w(char *s1, char *s2);
+int			ft_isquote(int c);
 
 /* === Builtins === */
 int		change_cd(char	**directory);

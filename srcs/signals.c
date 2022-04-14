@@ -6,12 +6,11 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:34:42 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 19:55:18 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/14 23:00:35 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 void	echo_control_seq(int c)
 {
@@ -31,6 +30,7 @@ void	handle_sigquit(int sig)
 	{
 		printf("Quit: 3\n");
 		rl_on_new_line();
+		g_data.exec = 131;
 	}
 }
 
@@ -57,5 +57,6 @@ void	handle_sigint(int sig)
 			rl_on_new_line();
 			rl_redisplay();
 		}
+		g_data.exec = 1;
 	}
 }

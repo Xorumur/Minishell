@@ -29,15 +29,28 @@ void	ft_swap_env_content(char *name, char *content)
 
 }
 
-int	i_increment(int token)
+static void	cmd_unset_assist(char *name, char *content)
 {
-	if (token == 0)
-		return (0);
-	else if (token == 2)
-		return (2);
-	else if (token == 9)
-		return (2);
-	return (0);
+	t_env	*env;
+	t_env	*start;
+
+	start = g_data.env;
+	env = g_data.env;
+	if (!name)
+		return ;
+	while (env)
+	{
+		if (!ft_strncmp(name, env->name, ft_strlen(name)))
+		{
+			printf("Adresse ici : %p\n", env->content);
+			free(env->content);
+			env->content = NULL;
+			env->content = ft_strdup(content);
+			break ;
+		}
+		env = env->next;
+	}
+	g_data.env = start;
 }
 
 int export_cmd(void)
@@ -109,18 +122,26 @@ int export_cmd(void)
 				tmp = tmp->next;
 			tmp = tmp->next;
 			content = ft_strdup(tmp->token->value);
-			while (ft_iswspace(cmd[i]) == 0 && cmd[i])
+			if (cmd[i] && ft_isquote(cmd[i]) == 1)
+			{
+				while (cmd[i] && ft_isquote(cmd[++i]) != 1)
+					i++;
 				i++;
+			}
+			else 
+			{
+				while (ft_iswspace(cmd[i]) == 0 && cmd[i])
+					i++;
+			}
 		}
-		if (ft_getenv(new_env) == NULL && env_exist(new_env) == 0)
+		if (env_exist(new_env) == 0)
 			ft_lstadd_back_env(&g_data.env, ft_lstnew_env(ft_strdup(new_env), ft_strdup(content)));
 		else
-			ft_swap_env_content(new_env, content);
+			cmd_unset_assist(new_env, content);
 		free(new_env);
 		new_env = NULL;
 		free(content);
 		content = NULL;
-		// free(new_env);
 	}
 	free(new_env);
 	if (content)

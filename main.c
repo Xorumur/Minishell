@@ -29,7 +29,7 @@ void	tokenizer(void)
 	t_tokenlist		*tokens;
 	t_tokenlist		*curr_node;
 	t_token			*curr_tok;
-
+		
 	tokens = NULL;
 	curr_tok = lexer_get_next_token(g_data.lexer);
 	while (curr_tok != NULL)
