@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:22:36 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 16:57:14 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/16 10:06:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	cmd_env(void)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		tmp = tmp->next;
 	}
+	g_data.exec = 0;
 	return (1);
 }
 
 int	cmd_exit(void)
 {
 	ft_putstr_fd("exit\n", STDERR_FILENO);
+	g_data.exec = 0;
 	exit(1);
 	return (1);
 }
@@ -72,5 +74,6 @@ int	cmd_unset(char **cmd)
 		i++;
 		env = start;
 	}
+	g_data.exec = 0;
 	return (1);
 }

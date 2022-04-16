@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:58:09 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 16:14:08 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/16 10:04:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	get_pwd(void)
 	res = getcwd(pwd, sizeof(pwd));
 	ft_putstr_fd(res, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
+	g_data.exec = 0;
 	return (1);
 }
 
@@ -34,45 +35,7 @@ int	change_cd(char	**directory)
 		ft_putchar_fd(':', STDERR_FILENO);
 		ft_putstr_fd(" No such file or directory\n", STDERR_FILENO);
 	}
+	g_data.exec = 0;
 	return (1);
 }
 
-int	cmd_echo(char **cmd)
-{
-	int	n;
-	int	i;
-
-	i = 1;
-	n = 0;
-	if (!cmd[1])
-		n = 0;
-	else if (!ft_strncmp(cmd[1], "-n", ft_strlen("-n")))
-	{
-		n = 1;
-		i++;
-	}
-	while (cmd[i])
-	{
-		ft_putstr_fd(cmd[i], STDOUT_FILENO);
-		ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (n == 0)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (1);
-}
-
-int	cmd_export(char	*name, char *content)
-{
-	if (name)
-	{
-		ft_lstadd_back_env(&g_data.env, ft_lstnew_env(ft_strdup(name),
-				ft_strdup(content)));
-	}
-	else
-	{
-		print_env(g_data.env, STDOUT_FILENO);
-	}
-	printf("Here export\n");
-	return (1);
-}

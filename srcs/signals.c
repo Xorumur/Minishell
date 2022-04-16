@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:34:42 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 23:00:35 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/16 10:02:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	echo_control_seq(int c)
 {
 	struct termios	conf;
 
-	ioctl(ttyslot(), TIOCGETA, &conf);
+	ioctl(ttyslot(), TIOCGETD, &conf);
 	if (c == 1)
 		conf.c_lflag |= ECHOCTL;
 	else if (c == 0)
 		conf.c_lflag &= ~(ECHOCTL);
-	ioctl(ttyslot(), TIOCSETA, &conf);
+	ioctl(ttyslot(), TIOCGETD, &conf);
 }
 
 void	handle_sigquit(int sig)

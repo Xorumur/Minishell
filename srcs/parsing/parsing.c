@@ -109,21 +109,12 @@ void	exec(int redir, char **cmd, int in)
 	}
 	if (builtins(cmd[0]) == 1)
 	{
-		// id = fork();
-		// if (id == 0)
-		// {
-			if (in != -1)
-				dup2(in, STDIN_FILENO);
-			if (redir != -1 && redir != 24640)
-				dup2(redir, STDOUT_FILENO);
-			is_builtins(cmd);
-			// if (redir != -1)
-			// 	close(redir);
-			// if (in != -1)
-			// 	close(in);
-			// exit(1);
-		// }
-		// waitpid(id, NULL, 0);
+		if (in != -1)
+			dup2(in, STDIN_FILENO);
+		if (redir != -1 && redir != 24640)		
+			dup2(redir, STDOUT_FILENO);
+		is_builtins(cmd);
+		// Close les fd ?	
 		return ;
 	}
 	tmp = search_path(cmd[0], 0);
@@ -152,6 +143,7 @@ void	exec(int redir, char **cmd, int in)
 	}
 	g_data.exec = 0;
 	waitpid(id, NULL, 0);
+	return ;
 }
 
 void	parsing(void)
@@ -195,6 +187,12 @@ void	parsing(void)
 		else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 		{
 			export_cmd();
+			free_tab(cmd);
+			return ;
+		}
+		else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
+		{
+			echo_cmd();
 			free_tab(cmd);
 			return ;
 		}

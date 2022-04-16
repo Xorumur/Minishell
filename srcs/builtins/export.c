@@ -113,7 +113,10 @@ int export_cmd(void)
 			}
 		}
 		else if (cmd[i] == '=')
+		{
 			i++;
+			tmp = tmp->next;
+		}
 		if (!cmd[i] || ft_iswspace(cmd[i]) == 1)
 		{
 			content = NULL;
@@ -123,10 +126,15 @@ int export_cmd(void)
 		}
 		else
 		{
-			while (tmp->token->e_type != 1 && tmp)
-				tmp = tmp->next;
-			tmp = tmp->next;
+			printf("%s\n", tmp->token->value);
 			content = ft_strdup(tmp->token->value);
+			tmp = tmp->next;
+			while (cmd[i] && tmp && tmp->token->e_type == 1)
+			{
+				content = ft_strjoin_w(content, tmp->token->value);
+				tmp = tmp->next;
+				i++;
+			}
 			if (cmd[i] && ft_isquote(cmd[i]) == 1)
 			{
 				while (cmd[i] && ft_isquote(cmd[++i]) != 1)
@@ -152,5 +160,6 @@ int export_cmd(void)
 	free(new_env);
 	if (content)
 		free(content);
+	g_data.exec = 0;
     return (1);
 }
