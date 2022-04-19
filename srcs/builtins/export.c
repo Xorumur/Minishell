@@ -71,6 +71,7 @@ int export_cmd(void)
     if (!tmp->next)
     {
         print_env(g_data.env, STDOUT_FILENO);
+		g_data.exec = 0;
         return(1);
     }
 	tmp = tmp->next;
@@ -79,6 +80,8 @@ int export_cmd(void)
 		content = NULL;
 		while (ft_iswspace(cmd[i]))
 			i++;
+		if (cmd[i] && ft_isquote(cmd[i]) == 1)
+            i++;
 		new_env = malloc(sizeof(char) * ft_alloc_size(cmd + i));
 		j = 0;
 		while (ft_isalpha(cmd[i]) == 1 || ft_isdigit(cmd[i]) == 1)
@@ -88,16 +91,14 @@ int export_cmd(void)
 			j++;
 		}
 		new_env[j] = '\0';
-		if (!cmd[i] || tmp->token->value[0] == 0)
+		if (cmd[i] && ft_isquote(cmd[i]) == 1)
+            i++;
+		if (!cmd[i])
 		{
 			if (new_env)
 				free(new_env);
 			return (1);
 		}
-		// else if (tmp->token->value[0] == 0)
-		// {
-		// 	continue ;
-		// }
 		if (cmd[i] == ' ')
 		{
 			if (tmp->next)
@@ -116,25 +117,42 @@ int export_cmd(void)
 		{
 			i++;
 			tmp = tmp->next;
-		}
-		if (!cmd[i] || ft_iswspace(cmd[i]) == 1)
-		{
-			content = NULL;
-			while (tmp->token->e_type != 1 && tmp)
-				tmp = tmp->next;
-			tmp = tmp->next;
-		}
-		else
-		{
-			printf("%s\n", tmp->token->value);
-			content = ft_strdup(tmp->token->value);
-			tmp = tmp->next;
 			while (cmd[i] && tmp && tmp->token->e_type == 1)
 			{
-				content = ft_strjoin_w(content, tmp->token->value);
+				if (!content)
+					content = ft_strdup(tmp->token->value);
+				else
+					content = ft_strjoin_w(content, tmp->token->value);
 				tmp = tmp->next;
 				i++;
 			}
+		}
+		// if (cmd[i] == ' ')
+		// {
+		// 	i++;
+		// }
+		// if (!cmd[i] || ft_iswspace(cmd[i]) == 1)
+		// {
+		// 	content = NULL;
+		// 	while (tmp->token->e_type != 1 && tmp)
+		// 		tmp = tmp->next;
+		// 	tmp = tmp->next;
+		// }
+		// On verifie qu'après la chié de = y'a pas un token vide ou rien
+		// Si y'a un token vide sur le charactère juste après les = on skip le texte
+		// Passe dire le else derière et va ajouter la variable
+		// Rentre que si le token est vide.
+		else if (tmp && cmd[i] && ft_iswspace(cmd[i]) != 1 && tmp->token->value[0] == 0)
+		{
+			while (cmd[i] && ft_isprint(cmd[i]) > 0 && ft_iswspace(cmd[i]) != 1)
+				i++;
+			if (tmp->next)
+				tmp = tmp->next;
+		}
+		else  //if (ft_iswspace(cmd[i]) != 1)
+		{
+			content = ft_strdup(tmp->token->value);
+			tmp = tmp->next;
 			if (cmd[i] && ft_isquote(cmd[i]) == 1)
 			{
 				while (cmd[i] && ft_isquote(cmd[++i]) != 1)
