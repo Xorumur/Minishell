@@ -22,9 +22,10 @@ SRCS =	main.c \
 		srcs/parsing/handle_error.c \
 		srcs/parsing/handle_error2.c \
 		srcs/parsing/parsing2.c \
-		srcs/builtins/export.c \
-		srcs/builtins/export2.c \
 		srcs/builtins/echo.c \
+		srcs/builtins/export_clean.c\
+		#srcs/builtins/export.c \
+		srcs/builtins/export2.c \
 
 OBJS = $(SRCS:.c=.o)
 
