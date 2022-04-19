@@ -53,6 +53,7 @@ void	minishell(void)
 		// free_all();
 		// free_tab(g_data.tab_env);
 		// while (1) ;
+		// system("leaks minishell");
 		exit(ft_putstr_fd("exit\n", STDERR_FILENO));
 	}
 	else if (!(g_data.cmd[0] == 0))

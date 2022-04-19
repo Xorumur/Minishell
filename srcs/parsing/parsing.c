@@ -163,7 +163,11 @@ void	parsing(void)
 	while (tmp != NULL)
 	{
 		if (tmp->token->e_type == 0 || tmp->token->e_type == 2 || tmp->token->e_type == 9) 
+		{
+			if (cmd)
+				free_tab(cmd);
 			cmd = parser_cmd(&tmp, cmd);
+		}
 		// printf("token : %i | value : %s\n", tmp->token->e_type, tmp->token->value);
 		if (tmp && (tmp->token->e_type == 6 ||
 				tmp->token->e_type == 8))

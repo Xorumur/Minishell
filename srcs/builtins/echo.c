@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/16 10:43:30 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/19 19:42:10 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ int	echo_cmd(void)
 		{
 			if (tmp)
 				ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
-			if (tmp && tmp->next)
-				tmp = tmp->next;
+			tmp = tmp->next;
 			i++;
 			while (cmd[i] && ft_isquote(cmd[i]) != 1)
 				i++;
 			i++;
+			while (cmd[i] && ft_isquote(cmd[i]) == 1)
+				i++;
 		}
 		else
 		{

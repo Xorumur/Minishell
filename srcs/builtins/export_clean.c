@@ -1,4 +1,42 @@
 #include "../../includes/minishell.h"
+#include <string.h>
+
+int ft_same_str(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	if (s2[i] != '\0')
+		return (0);
+	return (1);
+}
+
+int	ft_same_content(char *name, char *content)
+{
+	t_env	*tmp;
+
+	tmp = g_data.env;
+	while (tmp)
+	{
+		if (!ft_strncmp(name, tmp->name, ft_strlen(tmp->name)))
+		{
+			printf("crash\n");
+			printf("Tmp->content %s\n", tmp->content);
+			if (!ft_strncmp(content, tmp->content, ft_strlen(content)))
+			{
+				return (1);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	env_exist(char *name)
 {
@@ -7,7 +45,7 @@ int	env_exist(char *name)
 	tmp = g_data.env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(tmp->name)))
+		if (ft_same_str(name, tmp->name) == 1)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -24,43 +62,28 @@ int ft_alloc_size(char *cmd)
     return (i + 1);
 }
 
-// static void	cmd_unset_assist(char *name, char *content)
-// {
-// 	t_env	*env;
-// 	t_env	*start;
+static void	cmd_unset_assist(char *name, char *content)
+{
+	t_env	*env;
+	t_env	*start;
 
-// 	start = g_data.env;
-// 	env = g_data.env;
-// 	if (!name)
-// 		return ;
-// 	while (env)
-// 	{
-// 		if (!ft_strncmp(name, env->name, ft_strlen(name)))
-// 		{
-// 			printf("Adresse ici : %p\n", env->content);
-// 			free(env->content);
-// 			env->content = NULL;
-// 			env->content = ft_strdup(content);
-// 			break ;
-// 		}
-// 		env = env->next;
-// 	}
-// 	g_data.env = start;
-// }
-
-// int	ft_isquote(int c)
-// {
-// 	if (c == '"' || c == 39)
-// 		return (1);
-// 	return (0);
-// }
-
-// int	ft_isequal(int c)
-// {
-// 	if (c == '=')
-// 		return (1);
-// 	return (0);
-// }
+	start = g_data.env;
+	env = g_data.env;
+	if (!name)
+		return ;
+	while (env)
+	{
+		if (ft_same_str(name, env->name) == 1)
+		{
+			free(env->content);
+			env->content = NULL;
+			env->content = ft_strdup(content);
+			break ;
+		}
+		env = env->next;
+	}
+	g_data.env = start;
+}
 
 int export_cmd(void)
 {
@@ -85,60 +108,96 @@ int export_cmd(void)
 	tmp = tmp->next;
     while (cmd[i])
     {
+		content = NULL;
+		new_env = NULL;
         while (ft_iswspace(cmd[i]))
 			i++;
         if (cmd[i] && ft_isquote(cmd[i]) == 1)
             i += 2;
 		new_env = ft_strdup(tmp->token->value);
 		i += ft_strlen(new_env);
+		printf("New env : %s\n", new_env);
 		if (tmp->next)
 			tmp = tmp->next;
-		// printf("Line : %s\n", (cmd + i));
-		// printf("Char : %c\n", cmd[i]);
-		// printf("new_env : %s\n", new_env);
-		// printf("New token : %s\n", tmp->token->value);
-		// On est bien au char suivant le variable d'environnement
 		if (!cmd[i])
 		{
-			free(new_env);
+			if (new_env)
+				free(new_env);
 			return (1);
 		}
 		else if (cmd[i] && tmp && ft_iswspace(cmd[i]) == 1)
 		{
-			// Faire en sorte de skip tous le reste
+			if (new_env)
+				free(new_env);
+			continue ;
 		}
 		else if (cmd[i] && tmp && tmp->token->e_type == 1)
 		{
+			i++;
+			if (tmp->next)
+				tmp = tmp->next;
+			while (cmd[i] && tmp && tmp->token->e_type == 1)
+			{
+				if (!content)
+					content = ft_strdup(tmp->token->value);
+				else 
+					content = ft_strjoin_w(content, tmp->token->value);
+				i++;
+				if (tmp->next)
+					tmp = tmp->next;
+			}
+		}
+		if (tmp && tmp->token->value[0] == 0)
+		{
+			while (cmd[i] && ft_iswspace(cmd[i]) != 1)
+				i++;
+			if (tmp->next)
+				tmp = tmp->next;
+		}
+		else if (cmd[i] && ft_isquote(cmd[i]) == 1)
+        {
 			if (!content)
 				content = ft_strdup(tmp->token->value);
-			else 
+			else
 				content = ft_strjoin_w(content, tmp->token->value);
+			if (tmp->next)
+				tmp = tmp->next;
 			i++;
-			tmp = tmp->next;
+			while (cmd[i] && ft_isquote(cmd[i]) != 1)
+				i++;
+			if (cmd[i] != '\0')
+				i++;
 		}
-		// On a passe les '='
-		// Maintenant faut prendre la suite
-		if (cmd[i] && ft_isquote(cmd[i]) == 1)
-            i += 2;
 		else if (cmd[i] && ft_iswspace(cmd[i]) != 1)
 		{
 			if (!content)
 				content = ft_strdup(tmp->token->value);
 			else 
 				content = ft_strjoin_w(content, tmp->token->value);
-			i += ft_strlen(new_env);
+			if (tmp->next)
+				tmp = tmp->next;
+			i += ft_strlen(content);
 		}
+		// printf("New env : %s\n", new_env);
+		// printf("New content : %s\n", content);
+		// printf("env_exist : %i\n", env_exist(new_env));
+		// printf("same content : %i\n", ft_same_content(new_env, content));
 		if (env_exist(new_env) == 0)
+		{
+			printf("add\n");
 			ft_lstadd_back_env(&g_data.env, ft_lstnew_env(ft_strdup(new_env), ft_strdup(content)));
-		else
+		}
+		else if (ft_same_content(new_env, content) != 1)
+		{
+			printf("Unset\n");
 			cmd_unset_assist(new_env, content);
+		}
+		printf("fin\n");
 		if (new_env)
 			free(new_env);
 		if (content)
 			free(content);
     }
-	// if (content)
-	// 	free(content);
-	// g_data.exec = 0;
+	g_data.exec = 0;
     return (1);
 }
