@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:31 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 17:22:10 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/19 20:40:19 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_env(t_env *env, int fd)
 	tmp = env;
 	while (tmp)
 	{
-		ft_putstr_fd("declare -x " , fd);
+		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(tmp->name, fd);
 		ft_putstr_fd("=", fd);
 		ft_putchar_fd('"', fd);
@@ -74,7 +74,7 @@ char	*ft_getenv(char *name)
 
 int	ft_lstsize(t_env *env)
 {
-	int	i;
+	int		i;
 	t_env	*tmp;
 
 	tmp = env;
@@ -92,7 +92,7 @@ char	**get_new_env(void)
 	char	**env;
 	t_env	*tmp;
 	int		i;
-	char *temp;
+	char	*temp;
 
 	i = 0;
 	tmp = g_data.env;

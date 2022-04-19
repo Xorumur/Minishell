@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:34:42 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/16 10:02:31 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/19 20:21:01 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
-		if (g_data.status.is_fork == FALSE && g_data.status.is_dlredir == FALSE) 
+		if (g_data.status.is_fork == FALSE
+			&& g_data.status.is_dlredir == FALSE)
 		{
 			rl_replace_line("", 0);
 			ft_putstr_fd("\n", STDOUT_FILENO);

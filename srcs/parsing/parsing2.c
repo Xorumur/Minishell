@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   parsing2.c										 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: mlecherb <mlecherb@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/04/19 20:44:32 by mlecherb		  #+#	#+#			 */
+/*   Updated: 2022/04/19 20:44:32 by mlecherb		 ###   ########.fr	   */
+/*																			*/
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int		verif_limiter(char *s1, char *limiter)
+int	verif_limiter(char *s1, char *limiter)
 {
 	int	i;
-	
+
 	i = 0;
 	while (s1[i] == limiter[i])
 	{
@@ -38,8 +50,6 @@ void	heredoc(t_tokenlist **token, int in)
 			if (line)
 				temp = ft_strjoin_h(line, temp);
 			line = ft_strjoin(temp, "\n");
-			// printf("LINE : %s\n", line);
-			// printf("ADRES: %p\n", line);
 			free(temp);
 		}
 		else if (temp[0] == 0)
@@ -58,9 +68,9 @@ void	write_fd(char *path, int fd)
 	char	buf[2];
 	int		len;
 	char	*line;
-    int     fdin;
+	int		fdin;
 
-    fdin = open(path, O_RDONLY);
+	fdin = open(path, O_RDONLY);
 	if (fdin == -1)
 	{
 		ft_putstr_fd(path, STDERR_FILENO);
@@ -78,7 +88,7 @@ void	write_fd(char *path, int fd)
 	}
 	ft_putstr_fd(line, fd);
 	free(line);
-    close(fdin);
+	close(fdin);
 }
 
 int	builtins(char *cmd)
@@ -86,35 +96,35 @@ int	builtins(char *cmd)
 	int	retour;
 
 	retour = 0;
-	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd))) // FAIT
-    	retour = 1;
+	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
+		retour = 1;
 	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd)))
 		retour = 1;
-	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd))) // FAIT
-    	retour = 1;
-	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd))) // FAIT
+	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
 		retour = 1;
-	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd))) // FAIT
+	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd)))
+		retour = 1;
+	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
 		retour = 1;
 	return (retour);
 }
 
 int	is_builtins(char **cmd)
 {
-    int retour;
+	int	retour;
 
-    retour = 0;
-	if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0]))) // FAIT
-    	retour = cmd_unset(cmd);
+	retour = 0;
+	if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
+		retour = cmd_unset(cmd);
 	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 		retour = export_cmd();
-	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0]))) // FAIT
-        retour = change_cd(cmd);
-	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0]))) // FAIT
-    	retour = get_pwd();
-	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0]))) // FAIT
+	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
+		retour = change_cd(cmd);
+	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
+		retour = get_pwd();
+	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 		retour = cmd_env();
-	else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0]))) // FAIT
+	else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
 		retour = echo_cmd();
 	return (retour);
 }

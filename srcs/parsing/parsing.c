@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 20:43:48 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/19 20:44:14 by mlecherb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*search_path(char *cmd, int id)
@@ -114,7 +126,6 @@ void	exec(int redir, char **cmd, int in)
 		if (redir != -1 && redir != 24640)		
 			dup2(redir, STDOUT_FILENO);
 		is_builtins(cmd);
-		// Close les fd ?	
 		return ;
 	}
 	tmp = search_path(cmd[0], 0);
@@ -157,7 +168,6 @@ void	parsing(void)
 	fd[1] = 0;
 	redir = -1;
 	tmp = g_data.tokens;
-	// printf("in = %i | redir = %i\n", fd[0], redir);
 	if (handle_error_token() == -1)
 		return ;
 	while (tmp != NULL)
@@ -168,7 +178,6 @@ void	parsing(void)
 				free_tab(cmd);
 			cmd = parser_cmd(&tmp, cmd);
 		}
-		// printf("token : %i | value : %s\n", tmp->token->e_type, tmp->token->value);
 		if (tmp && (tmp->token->e_type == 6 ||
 				tmp->token->e_type == 8))
 		{
@@ -177,7 +186,6 @@ void	parsing(void)
 		else if (tmp && tmp->token->e_type == 5)
 		{
 			pipe(fd);
-			// boucler pour prendre le dernier file.
 			write_fd(tmp->next->token->value, fd[1]);
 			close(fd[1]);
 			tmp = tmp->next->next;
@@ -203,18 +211,9 @@ void	parsing(void)
 		else if (tmp)
 			tmp = tmp->next;
 	}
-	// printf("Here tab\n");
-	// print_tab(cmd);
-	// printf("====\n");
 	if (cmd)
 	{
-		// printf("Before execv\n");
 		exec(redir, cmd, fd[0]);
-		// printf("After exec\n");
-		// close(redir);
-		// close(fd[0]);
-		// print_tab(cmd);
 		free_tab(cmd);
 	}
-	// free_tab(cmd);
 }
