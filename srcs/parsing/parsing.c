@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:43:48 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/19 20:44:14 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:25:06 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*search_path(char *cmd, int id)
 	}
 	if (id == 0)
 	{
-		ft_putstr_fd("Minishell: ",STDERR_FILENO);
+		ft_putstr_fd("Minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	}
@@ -50,23 +50,21 @@ char	*search_path(char *cmd, int id)
 
 char	**parser_cmd(t_tokenlist **token, char **cmd)
 {
-	int	i;
-	t_tokenlist *tmp;
+	int			i;
+	t_tokenlist	*tmp;
 
 	tmp = *token;
 	i = 0;
-	while (tmp != NULL && (tmp->token->e_type == 0 ||
-			tmp->token->e_type == 2 ||
-			tmp->token->e_type == 9))
+	while (tmp != NULL && (tmp->token->e_type == 0
+			|| tmp->token->e_type == 2 || tmp->token->e_type == 9))
 	{
 		i++;
 		tmp = tmp->next;
 	}	
 	cmd = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while ((*token) != NULL && ((*token)->token->e_type == 0 ||
-			(*token)->token->e_type == 2 ||
-			(*token)->token->e_type == 9))
+	while ((*token) != NULL && ((*token)->token->e_type == 0
+			|| (*token)->token->e_type == 2 || (*token)->token->e_type == 9))
 	{
 		cmd[i++] = ft_strdup((*token)->token->value);
 		(*token) = (*token)->next;
@@ -77,11 +75,11 @@ char	**parser_cmd(t_tokenlist **token, char **cmd)
 
 int	verif_multiple_redir(t_tokenlist **token)
 {
-	int redir;
+	int	redir;
 
 	redir = 0;
-	while (*token && ((*token)->token->e_type == 6 ||
-			(*token)->token->e_type == 8))
+	while (*token && ((*token)->token->e_type == 6
+			|| (*token)->token->e_type == 8))
 	{
 		if ((*token)->token->e_type == 8)
 		{
@@ -89,15 +87,15 @@ int	verif_multiple_redir(t_tokenlist **token)
 					O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (redir == -1)
 				redir = open((*token)->next->token->value,
-					O_WRONLY | O_CREAT | O_TRUNC, 0664);
+						O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		}
 		else if ((*token)->token->e_type == 6)
 		{
 			redir = open((*token)->next->token->value,
-				O_CREAT | O_WRONLY | O_TRUNC, 0644);
+					O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (redir == -1)
 				redir = open((*token)->next->token->value,
-					O_WRONLY | O_CREAT | O_TRUNC, 0664);	
+						O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		}
 		(*token) = (*token)->next->next;
 	}
@@ -123,7 +121,7 @@ void	exec(int redir, char **cmd, int in)
 	{
 		if (in != -1)
 			dup2(in, STDIN_FILENO);
-		if (redir != -1 && redir != 24640)		
+		if (redir != -1 && redir != 24640)
 			dup2(redir, STDOUT_FILENO);
 		is_builtins(cmd);
 		return ;
@@ -160,10 +158,11 @@ void	exec(int redir, char **cmd, int in)
 void	parsing(void)
 {
 	t_tokenlist	*tmp;
-	char		**cmd = NULL;
+	char		**cmd;
 	int			redir;
 	int			fd[2];
-	
+
+	cmd = NULL;
 	fd[0] = 0;
 	fd[1] = 0;
 	redir = -1;
@@ -172,17 +171,15 @@ void	parsing(void)
 		return ;
 	while (tmp != NULL)
 	{
-		if (tmp->token->e_type == 0 || tmp->token->e_type == 2 || tmp->token->e_type == 9) 
+		if (tmp->token->e_type == 0 || tmp->token->e_type == 2
+			|| tmp->token->e_type == 9)
 		{
 			if (cmd)
 				free_tab(cmd);
 			cmd = parser_cmd(&tmp, cmd);
 		}
-		if (tmp && (tmp->token->e_type == 6 ||
-				tmp->token->e_type == 8))
-		{
-			redir = verif_multiple_redir(&tmp);	
-		}
+		if (tmp && (tmp->token->e_type == 6 || tmp->token->e_type == 8))
+			redir = verif_multiple_redir(&tmp);
 		else if (tmp && tmp->token->e_type == 5)
 		{
 			pipe(fd);

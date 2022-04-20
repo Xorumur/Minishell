@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:17:37 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/19 20:17:50 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:48:17 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ t_token	*lexer_rightarrow(t_lexer *lexer)
 	}
 	return (NULL);
 }
-

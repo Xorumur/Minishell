@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:22:36 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/16 10:06:18 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/20 11:38:08 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	cmd_unset(char **cmd)
 	int		i;
 	t_env	*start;
 
-	
 	i = 1;
 	start = g_data.env;
 	env = g_data.env;
@@ -59,7 +58,6 @@ int	cmd_unset(char **cmd)
 			{
 				tmp = env->next;
 				env->next = env->next->next;
-				// tmp->prev->next = tmp->next;
 				free(tmp->name);
 				if (tmp->content)
 					free(tmp->content);

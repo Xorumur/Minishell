@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:18:08 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/19 20:18:10 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:49:02 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_token	*init_token(int type, char *value)
 {
 	t_token	*token;
 
-	// if (!value)
-	// 	return NULL;
 	token = malloc(sizeof(t_token));
 	if (!token)
 		exit(127);
@@ -46,7 +44,8 @@ t_token	*init_token(int type, char *value)
 }
 
 /*
- ** Function that mains the lexer, every call to lexer_get_next_token return the next token
+ ** Function that mains the lexer, every call to lexer_get_next_token 
+ 		return the next token
  ** in our command, we loop to this functions to setup our token chained list
  */
 t_token	*lexer_get_next_token(t_lexer *lexer)
@@ -54,25 +53,25 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	while (lexer->c != '\0' && lexer->i < ft_strlen(lexer->content))
 	{
 		if (lexer->c == '"')
-			return (lexer_string(lexer, NULL)); // Return a token 'string' (")
+			return (lexer_string(lexer, NULL));
 		else if (lexer->c == '\'')
-			return (lexer_string_simpleq(lexer, NULL)); // Return a token 'simple quote' (')
+			return (lexer_string_simpleq(lexer, NULL));
 		else if (lexer->c == '=')
 			return (lexer_advance_with_token(lexer, init_token(TK_EQUALS,
-						lexer_get_current_char_as_string(lexer, 0)))); // Return a token 'equal' (=)
+						lexer_get_current_char_as_string(lexer, 0))));
 		else if (lexer->c == '|')
 			return (lexer_advance_with_token(lexer, init_token(TK_PIPE,
-						lexer_get_current_char_as_string(lexer, 0)))); // Return a token 'pipe' (|)
+						lexer_get_current_char_as_string(lexer, 0))));
 		else if (lexer->c == '<')
-			return (lexer_leftarrow(lexer)); // Return a token 'leftarr' (<)
+			return (lexer_leftarrow(lexer));
 		else if (lexer->c == '>')
-			return (lexer_rightarrow(lexer)); // Return a token 'rightarr' (>)
+			return (lexer_rightarrow(lexer));
 		else if (lexer->c == ' ')
-			lexer_isspace_skip(lexer); // Skips spaces every time lexer->c is a space
+			lexer_isspace_skip(lexer);
 		else if (ft_isprint(lexer->c))
-			return (lexer_collect_id(lexer)); // Return a token id when nothing else is detected
+			return (lexer_collect_id(lexer));
 		else
-			lexer_advance(lexer); // Increment lexer->i and change lexer->c to go to next token
+			lexer_advance(lexer);
 	}
 	return ((void *)0);
 }

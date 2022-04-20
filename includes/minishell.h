@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 22:26:51 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:52:58 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef int	t_bool;
 typedef struct s_lexer
 {
 	char			c;
-	int	i;
+	int				i;
 	char			*content;
 }	t_lexer;
 
@@ -77,11 +77,11 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_status {
-	t_bool	is_env;			// is env valid ?
-	t_bool	is_fork;		// are we in a fork ? (for signals)
-	t_bool	is_redir;		// is there redir in cmd ?
-	t_bool	is_pipe;		// is there pipes in cmd ?
-	t_bool	is_heredoc;		// is there heredoc in cmd ? (double left redir)
+	t_bool	is_env;
+	t_bool	is_fork;
+	t_bool	is_redir;
+	t_bool	is_pipe;
+	t_bool	is_heredoc;
 	t_bool	is_dlredir;
 	t_bool	ctrlc;
 }	t_status;
@@ -100,14 +100,14 @@ typedef struct s_pipe {
 
 /* === Global Struct === */
 typedef struct t_data {
-	char			*cmd;		// curr cmd readline
-	t_status		status;		// minishell status vars
+	char			*cmd;
+	t_status		status;
 	t_env			*env;
 
-	t_lexer*		lexer;		// Lexer (every commands)
-	t_tokenlist*	tokens;		// Token list (every commands is reseted)
+	t_lexer			*lexer;
+	t_tokenlist		*tokens;
 
-	int				exec;		// Return number from cmds
+	int				exec;
 	t_bool			quoterror;
 
 	t_pipe			*pipe;
@@ -117,7 +117,6 @@ typedef struct t_data {
 
 t_data		g_data;
 /* ===================== */
-
 
 void		rl_replace_line(const char *text, int clear_undo);
 void		parsing(void);
@@ -139,10 +138,10 @@ char		**get_new_env(void);
 t_env		*ft_lstnew_env(char *name, char *content);
 void		ft_lstadd_back_env(t_env **alst, t_env *new);
 void		ft_lstadd_back_token(t_tokenlist **alst, t_tokenlist *new);
-t_tokenlist	*ft_lstnew_token(t_token* token);
+t_tokenlist	*ft_lstnew_token(t_token *token);
 void		free_all(void);
 char		*ft_realloc(char *src, int size);
-char		**realloc_tab(char	**t, int size);
+char		**realloc_tab(char **t, int size);
 void		free_tab(char **tableau);
 void		print_tab(char **x);
 int			verif_multiple_redir(t_tokenlist **token);
@@ -152,21 +151,20 @@ char		*ft_strjoin_w(char *s1, char *s2);
 int			ft_isquote(int c);
 
 /* === Builtins === */
-int		change_cd(char	**directory);
-int		get_pwd(void);
-int		cmd_env(void);
-int		cmd_exit(void);
-int		cmd_unset(char **cmd);
-void	heredoc(t_tokenlist **token, int in);
-int		export_cmd(void);
-int		builtins(char *cmd);
-int		echo_cmd(void);
-
+int			change_cd(char **directory);
+int			get_pwd(void);
+int			cmd_env(void);
+int			cmd_exit(void);
+int			cmd_unset(char **cmd);
+void		heredoc(t_tokenlist **token, int in);
+int			export_cmd(void);
+int			builtins(char *cmd);
+int			echo_cmd(void);
 
 /* === SIGNALS === */
-void	handle_sigquit(int sig);
-void	handle_sigint(int sig);
-void	echo_control_seq(int c);
+void		handle_sigquit(int sig);
+void		handle_sigint(int sig);
+void		echo_control_seq(int c);
 
 /* === LEXER === */
 t_token		*lexer_get_next_token(t_lexer *lexer);
@@ -184,6 +182,5 @@ void		lexer_isspace_skip(t_lexer *lexer);
 int			ft_isprint_token(int c);
 char		*lexer_get_current_char_as_string(t_lexer *lexer, int arr);
 char		*get_alpha_string(t_lexer *lexer);
-
 
 #endif

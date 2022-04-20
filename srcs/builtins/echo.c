@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/19 19:42:10 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:39:48 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	echo_cmd(void)
 	char		*cmd;
 	int			i;
 	int			o;
-	// char		*line;
 
-	// line = NULL;
 	o = -1;
 	i = 0;
 	tmp = g_data.tokens;
@@ -59,12 +57,8 @@ int	echo_cmd(void)
 		while (cmd[i] && ft_iswspace(cmd[i]) == 1)
 			i++;
 	}
-	// printf("line %s\n", cmd + i);
-	// printf("value : %s | type : %i \n", tmp->token->value, tmp->token->e_type);
-	// if (tmp->next)
-	// 	printf("value : %s | type : %i \n", tmp->next->token->value, tmp->next->token->e_type);
-	while (cmd[i] && tmp && tmp->token->e_type != 5 && tmp->token->e_type != 6 &&
-			tmp->token->e_type != 8 && tmp->token->e_type != 7)
+	while (cmd[i] && tmp && tmp->token->e_type != 5 && tmp->token->e_type != 6
+		&& tmp->token->e_type != 8 && tmp->token->e_type != 7)
 	{
 		if (cmd[i] && ft_isquote(cmd[i]) == 1)
 		{
@@ -84,12 +78,10 @@ int	echo_cmd(void)
 				ft_putstr_fd(tmp->token->value, STDOUT_FILENO);
 			if (tmp && tmp->next)
 				tmp = tmp->next;
-			else 
+			else
 				tmp = NULL;
-			while (cmd[i] && ft_isprint(cmd[i]) > 0 &&
-					ft_iswspace(cmd[i]) != 1 &&
-						ft_isquote(cmd[i]) !=  1 &&
-						ft_isequal(cmd[i]) != 1)
+			while (cmd[i] && ft_isprint(cmd[i]) > 0 && ft_iswspace(cmd[i]) != 1
+				&& ft_isquote(cmd[i]) != 1 && ft_isequal(cmd[i]) != 1)
 			{
 				i++;
 			}
