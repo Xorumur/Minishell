@@ -1,0 +1,16 @@
+total 120
+drwxr-xr-x  15 mlecherb  2021_nice    510 Apr 21 17:46 .
+drwxr-xr-x   6 mlecherb  2021_nice    204 Apr 20 12:00 ..
+drwxr-xr-x  15 mlecherb  2021_nice    510 Apr 21 15:42 .git
+drwxr-xr-x   3 mlecherb  2021_nice    102 Apr 20 11:34 .vscode
+-rw-r--r--   1 mlecherb  2021_nice   1371 Apr 21 17:32 Makefile
+-rw-r--r--   1 mlecherb  2021_nice      0 Apr 21 17:46 a
+drwxr-xr-x   3 mlecherb  2021_nice    102 Apr 20 11:34 includes
+drwxr-xr-x  95 mlecherb  2021_nice   3230 Apr 20 12:50 libft
+-rw-r--r--   1 mlecherb  2021_nice   3139 Apr 20 11:34 main.c
+-rw-r--r--   1 mlecherb  2021_nice   2904 Apr 21 17:32 main.o
+-rwxr-xr-x   1 mlecherb  2021_nice  39660 Apr 21 17:46 minishell
+drwxr-xr-x  17 mlecherb  2021_nice    578 Apr 21 17:32 srcs
+-rw-r--r--   1 mlecherb  2021_nice    455 Apr 20 11:34 to_fix
+drwxr-xr-x   2 mlecherb  2021_nice     68 Apr 21 17:26 trash
+-rw-r--r--   1 mlecherb  2021_nice   3508 Apr 20 11:34 tutorial_multipipes.c

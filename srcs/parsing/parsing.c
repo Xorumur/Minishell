@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:43:48 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 15:41:57 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:52:43 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,46 +126,24 @@ void	parsing(void)
 	t_tokenlist	*tmp;
 	char		**cmd;
 	int			redir;
-	int			fd[2];
-	int			save;
+	int			*fd;
 
-	save = dup(1);
+	fd = malloc(sizeof(int) * 2);
 	cmd = NULL;
-	fd[0] = 0;
-	fd[1] = 0;
 	redir = -1;
 	tmp = g_data.tokens;
 	if (handle_error_token() == -1)
 		return ;
 	while (tmp != NULL)
 	{
-		if (tmp->token->e_type == 0 || tmp->token->e_type == 2
-			|| tmp->token->e_type == 9)
-		{
-			if (cmd)
-				free_tab(cmd);
-			cmd = parser_cmd(&tmp, cmd);
-		}
-		if (tmp && (tmp->token->e_type == 6 || tmp->token->e_type == 8))
-			redir = verif_multiple_redir(&tmp);
-		else if (tmp && tmp->token->e_type == 5)
-		{
-			pipe(fd);
-			write_fd(tmp->next->token->value, fd[1]);
-			close(fd[1]);
-			tmp = tmp->next->next;
-		}
-		else if (tmp && tmp->token->e_type == 7)
-		{
-			pipe(fd);
-			heredoc(&tmp, fd[1]);
-			close(fd[1]);
-		}
+		get_cmd(&cmd, &tmp);
+		det_redir(&tmp, &redir);
+		fd = det_stdin(&tmp, fd);
 		if (builtins_parsing(redir, cmd) == 1)
-			return ;
+			return (free(fd));
 		if (tmp)
 			tmp = tmp->next;
 	}
 	exec(redir, cmd, fd[0]);
-	free_tab(cmd);
+	free_in_pars(cmd, fd);
 }

@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 15:16:22 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:44:59 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,11 @@ int			path_search(char **cmd);
 void		print_path_error(char *cmd, int id);
 char		*return_free(char **free, char *to_return);
 int			builtins_parsing(int redir, char **cmd);
+char		**parser_cmd(t_tokenlist **token, char **cmd);
+void		get_cmd(char ***cmd, t_tokenlist **tmp);
+void		det_redir(t_tokenlist **tmp, int *redir);
+int			*det_stdin(t_tokenlist **tmp, int *fd);
+void		free_in_pars(char **cmd, int *fd);
 
 /* === ENV === */
 void		init_data_env(char **env);

@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 14:24:13 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 14:54:46 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:44:50 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ int	path_search(char **cmd)
 	}
 	free(tmp);
 	return (0);
+}
+
+void	free_in_pars(char **cmd, int *fd)
+{
+	free_tab(cmd);
+	free(fd);
+	return ;
 }

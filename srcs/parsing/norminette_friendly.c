@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 15:00:00 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 15:15:53 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:42:06 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,15 @@ int	builtins_parsing(int redir, char **cmd)
 		return (1);
 	}
 	return (0);
+}
+
+void	get_cmd(char ***cmd, t_tokenlist **tmp)
+{
+	if ((*tmp)->token->e_type == 0 || (*tmp)->token->e_type == 2
+		|| (*tmp)->token->e_type == 9)
+	{
+		if (*cmd)
+			free_tab(*cmd);
+		*cmd = parser_cmd(tmp, *cmd);
+	}
 }

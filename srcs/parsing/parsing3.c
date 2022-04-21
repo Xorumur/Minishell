@@ -6,36 +6,11 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 16:06:18 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 14:38:53 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:37:34 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static char	**parser_cmd(t_tokenlist **token, char **cmd)
-{
-	int			i;
-	t_tokenlist	*tmp;
-
-	tmp = *token;
-	i = 0;
-	while (tmp != NULL && (tmp->token->e_type == 0
-			|| tmp->token->e_type == 2 || tmp->token->e_type == 9))
-	{
-		i++;
-		tmp = tmp->next;
-	}	
-	cmd = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while ((*token) != NULL && ((*token)->token->e_type == 0
-			|| (*token)->token->e_type == 2 || (*token)->token->e_type == 9))
-	{
-		cmd[i++] = ft_strdup((*token)->token->value);
-		(*token) = (*token)->next;
-	}
-	cmd[i] = NULL;
-	return (cmd);
-}
 
 void	write_fd_echo(int reada, int fd)
 {
