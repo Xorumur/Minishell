@@ -63,16 +63,6 @@ int	env_exist(char *name)
 	return (0);
 }
 
-int	ft_alloc_size(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] && (ft_isalpha(cmd[i]) == 1 || ft_isdigit(cmd[i]) == 1))
-		i++;
-	return (i + 1);
-}
-
 void	cmd_unset_assist(char *name, char *content)
 {
 	t_env	*env;
