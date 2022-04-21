@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:22:36 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 19:11:13 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:44:26 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,24 @@ int	cmd_exit(void)
 
 int	cmd_unset(char **cmd)
 {
-	t_env	*env;
 	t_env	*tmp;
 	int		i;
-	t_env	*start;
 
 	i = 1;
-	env = g_data.env;
-	start = env;
+	tmp = g_data.env;
 	if (!cmd[1])
 		return (1);
 	while (cmd[i])
 	{
 		printf("unset arg : %s\n", cmd[i]);
-		while (env)
+		while (g_data.env)
 		{
-			if (!ft_strncmp(cmd[i], env->next->name, ft_strlen(cmd[i])))
-			{
-				tmp = env->next;
-				env->next = env->next->next;
-				free(tmp->name);
-				if (tmp->content)
-					free(tmp->content);
-				free(tmp);
-				tmp = NULL;
+			if (unset_norm(&tmp, cmd[i]) == 1)
 				break ;
-			}
-			env = env->next;
+			g_data.env = g_data.env->next;
 		}
-		g_data.env = env;
-		g_data.env = start;
+		g_data.env = tmp;
 		i++;
-		env = start;
 	}
 	g_data.exec = 0;
 	return (1);

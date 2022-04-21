@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 18:52:54 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 23:48:04 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,18 @@ int			*det_stdin(t_tokenlist **tmp, int *fd);
 void		free_in_pars(char **cmd, int *fd);
 void		double_free_str(char *s1, char *s2);
 int			helper_parser(char *line, char *temp);
-
+int			unset_norm(t_env **tmp, char *cmd);
+int			skip_content(char **new_env, int *i, t_tokenlist **tmp, char *cmd);
+void 		change_env(char *new_env, char *content);
+int			freee(char *s1);
+int			start_export(t_tokenlist **tmp, int *i, int redir);
+void		cmd_unset_assist(char *name, char *content);
+int			ft_same_content(char *name, char *content);
+void		elif(char *cmd, int *i, t_tokenlist **tmp, char **content);
+void		elaf(char *cmd, t_tokenlist **tmp, int *i, char **content);
+void		elef(char *cmd, t_tokenlist **tmp, int *i);
+void		elof(char **content, t_tokenlist **tmp, int *i);
+int			normexport(char *content, char *new_env, t_tokenlist *tmp, int i);
 /* === ENV === */
 void		init_data_env(char **env);
 char		*ft_getenv(char *name);

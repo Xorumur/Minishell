@@ -101,9 +101,7 @@ int	is_builtins(char **cmd)
 	int	retour;
 
 	retour = 0;
-	if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
-		retour = cmd_unset(cmd);
-	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
+	if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
 		retour = change_cd(cmd);
 	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
 		retour = get_pwd();

@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:27:20 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 19:04:59 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:45:20 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ int	*det_stdin(t_tokenlist **tmp, int *fd)
 
 void	double_free_str(char *s1, char *s2)
 {
-	free(s1);
-	free(s2);
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
 	return ;
 }
 
@@ -53,6 +55,32 @@ int	helper_parser(char *line, char *temp)
 		else
 			line = ft_strjoin_h(line, ft_strdup("\n"));
 		free(temp);
+	}
+	return (0);
+}
+
+int	unset_norm(t_env **tmp, char *cmd)
+{
+	if (!ft_strncmp(cmd, (*tmp)->name, ft_strlen(cmd)))
+	{
+		double_free_str((*tmp)->name, (*tmp)->content);
+		(*tmp) = (*tmp)->next;
+		free((*tmp)->prev);
+		(*tmp)->prev = NULL;
+		return (1);
+	}
+	else if (!ft_strncmp(cmd, g_data.env->name, ft_strlen(cmd)))
+	{
+		double_free_str(g_data.env->name, g_data.env->content);
+		if (g_data.env->next)
+		{
+			g_data.env->prev->next = g_data.env->next;
+			g_data.env->next->prev = g_data.env->prev;
+		}
+		else
+			g_data.env->prev->next = NULL;
+		free(g_data.env);
+		return (1);
 	}
 	return (0);
 }
