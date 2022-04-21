@@ -24,6 +24,8 @@ SRCS =	main.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/export_clean.c\
 		srcs/parsing/parsing3.c \
+		srcs/parsing/help_exec.c\
+		srcs/parsing/norminette_friendly.c\
 		#srcs/builtins/export.c \
 		srcs/builtins/export2.c \
 

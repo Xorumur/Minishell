@@ -1,4 +1,12 @@
-[?2004h|---Mathiew * minishell---$> 
-[?2004l[?2004h|---Mathiew * minishell---$> 
-[?2004l[?2004h|---Mathiew * minishell---$> ^C[?2004l
-|---Mathiew * minishell---$> [?2004h[?2004l
+Makefile
+a
+includes
+libft
+main.c
+main.o
+minishell
+salut
+srcs
+to_fix
+trash
+tutorial_multipipes.c

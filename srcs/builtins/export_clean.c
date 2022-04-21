@@ -127,7 +127,7 @@ int	export_cmd(int redir)
 			i += 2;
 		new_env = ft_strdup(tmp->token->value);
 		i += ft_strlen(new_env);
-		printf("New env : %s\n", new_env);
+		// printf("New env : %s\n", new_env);
 		if (tmp->next)
 			tmp = tmp->next;
 		if (!cmd[i])
@@ -194,7 +194,6 @@ int	export_cmd(int redir)
 				ft_lstnew_env(ft_strdup(new_env), ft_strdup(content)));
 		else if (ft_same_content(new_env, content) != 1)
 			cmd_unset_assist(new_env, content);
-		printf("fin\n");
 		if (new_env)
 			free(new_env);
 		if (content)

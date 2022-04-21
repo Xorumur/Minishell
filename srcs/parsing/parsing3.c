@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 16:06:18 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 13:32:29 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:38:53 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,6 @@ static char	**parser_cmd(t_tokenlist **token, char **cmd)
 	}
 	cmd[i] = NULL;
 	return (cmd);
-}
-
-char	*get_map(int fd)
-{
-	char	buf[2];
-	int		len;
-	char	*line;
-
-	len = read(fd, buf, 1);
-	buf[1] = '\0';
-	line = ft_strdup(buf);
-	len = read(fd, buf, 1);
-	buf[1] = '\0';
-	while (len > 0)
-	{
-		line = ft_strjoin_w(line, buf);
-		len = read(fd, buf, 1);
-		buf[1] = '\0';
-	}
-	return (line);
-	// free(line);
 }
 
 void	write_fd_echo(int reada, int fd)

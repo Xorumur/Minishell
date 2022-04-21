@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 13:45:31 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:16:22 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,12 @@ void		write_fd(char *path, int fd);
 int			is_builtins(char **cmd);
 int			checker_arg(t_tokenlist *lst);
 int			env_exist(char *name);
+void 		process_fork_builtins(char **cmd, int redir);
+int			exec_builtins(char **cmd, int redir);
+int			path_search(char **cmd);
+void		print_path_error(char *cmd, int id);
+char		*return_free(char **free, char *to_return);
+int			builtins_parsing(int redir, char **cmd);
 
 /* === ENV === */
 void		init_data_env(char **env);
