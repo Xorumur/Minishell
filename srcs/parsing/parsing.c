@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:43:48 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/20 12:25:06 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 13:46:28 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	verif_multiple_redir(t_tokenlist **token)
 	{
 		if ((*token)->token->e_type == 8)
 		{
+		// 	if (redir != -1)
+		// 		close(redir);
 			redir = open((*token)->next->token->value,
 					O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (redir == -1)
@@ -91,6 +93,8 @@ int	verif_multiple_redir(t_tokenlist **token)
 		}
 		else if ((*token)->token->e_type == 6)
 		{
+			// if (redir != -1)
+			// 	close(redir);
 			redir = open((*token)->next->token->value,
 					O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (redir == -1)
@@ -119,11 +123,23 @@ void	exec(int redir, char **cmd, int in)
 	}
 	if (builtins(cmd[0]) == 1)
 	{
-		if (in != -1)
-			dup2(in, STDIN_FILENO);
-		if (redir != -1 && redir != 24640)
-			dup2(redir, STDOUT_FILENO);
-		is_builtins(cmd);
+		id = fork();
+		if (id == 0)
+		{
+			if (in != -1)
+				dup2(in, STDIN_FILENO);
+			if (redir != -1 && redir != 24640)
+				dup2(redir, STDOUT_FILENO);
+			is_builtins(cmd);
+			close(redir);
+			close(in);
+			exit(1);
+		}
+		else
+		{
+			waitpid(id, NULL, 0);
+			return ;
+		}
 		return ;
 	}
 	tmp = search_path(cmd[0], 0);
@@ -161,7 +177,9 @@ void	parsing(void)
 	char		**cmd;
 	int			redir;
 	int			fd[2];
+	int			save;
 
+	save = dup(1);
 	cmd = NULL;
 	fd[0] = 0;
 	fd[1] = 0;
@@ -179,7 +197,10 @@ void	parsing(void)
 			cmd = parser_cmd(&tmp, cmd);
 		}
 		if (tmp && (tmp->token->e_type == 6 || tmp->token->e_type == 8))
+		{
 			redir = verif_multiple_redir(&tmp);
+			printf("%i\n", redir);
+		}
 		else if (tmp && tmp->token->e_type == 5)
 		{
 			pipe(fd);
@@ -193,16 +214,19 @@ void	parsing(void)
 			heredoc(&tmp, fd[1]);
 			close(fd[1]);
 		}
-		else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
+		if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 		{
-			export_cmd();
+			export_cmd(redir);
 			free_tab(cmd);
+			close(redir);
 			return ;
 		}
 		else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
 		{
-			echo_cmd();
+			echo_cmd(g_data, redir);	
 			free_tab(cmd);
+			close(redir);
+			g_data.exec = 0;
 			return ;
 		}
 		else if (tmp)

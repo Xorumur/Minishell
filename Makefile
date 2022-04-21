@@ -1,4 +1,3 @@
-
 NAME = minishell
 
 CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
@@ -24,6 +23,7 @@ SRCS =	main.c \
 		srcs/parsing/parsing2.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/export_clean.c\
+		srcs/parsing/parsing3.c \
 		#srcs/builtins/export.c \
 		srcs/builtins/export2.c \
 

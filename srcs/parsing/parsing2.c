@@ -98,13 +98,9 @@ int	builtins(char *cmd)
 	retour = 0;
 	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
 		retour = 1;
-	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd)))
-		retour = 1;
 	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
 		retour = 1;
 	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd)))
-		retour = 1;
-	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
 		retour = 1;
 	return (retour);
 }
@@ -116,15 +112,11 @@ int	is_builtins(char **cmd)
 	retour = 0;
 	if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
 		retour = cmd_unset(cmd);
-	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
-		retour = export_cmd();
 	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
 		retour = change_cd(cmd);
 	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
 		retour = get_pwd();
 	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 		retour = cmd_env();
-	else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
-		retour = echo_cmd();
 	return (retour);
 }

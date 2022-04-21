@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/20 11:52:58 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 13:45:31 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,10 @@ int			cmd_env(void);
 int			cmd_exit(void);
 int			cmd_unset(char **cmd);
 void		heredoc(t_tokenlist **token, int in);
-int			export_cmd(void);
+int			export_cmd(int redir);
 int			builtins(char *cmd);
-int			echo_cmd(void);
+int			echo_cmd(t_data s_data, int redir);
+void		handle_echo(int redir);
 
 /* === SIGNALS === */
 void		handle_sigquit(int sig);
