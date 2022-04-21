@@ -6,13 +6,13 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 14:24:13 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 17:44:50 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:04:55 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void process_fork_builtins(char **cmd, int redir)
+void	process_fork_builtins(char **cmd, int redir)
 {
 	int	id;
 
@@ -66,7 +66,8 @@ int	path_search(char **cmd)
 
 void	free_in_pars(char **cmd, int *fd)
 {
-	free_tab(cmd);
+	if (cmd)
+		free_tab(cmd);
 	free(fd);
 	return ;
 }

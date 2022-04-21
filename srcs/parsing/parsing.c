@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 20:43:48 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 17:52:43 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:02:28 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,12 @@ void	parsing(void)
 		get_cmd(&cmd, &tmp);
 		det_redir(&tmp, &redir);
 		fd = det_stdin(&tmp, fd);
-		if (builtins_parsing(redir, cmd) == 1)
+		if (cmd && builtins_parsing(redir, cmd) == 1)
 			return (free(fd));
 		if (tmp)
 			tmp = tmp->next;
 	}
-	exec(redir, cmd, fd[0]);
+	if (cmd)
+		exec(redir, cmd, fd[0]);
 	free_in_pars(cmd, fd);
 }

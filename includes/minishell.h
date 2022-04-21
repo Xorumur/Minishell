@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 17:44:59 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:52:54 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void		get_cmd(char ***cmd, t_tokenlist **tmp);
 void		det_redir(t_tokenlist **tmp, int *redir);
 int			*det_stdin(t_tokenlist **tmp, int *fd);
 void		free_in_pars(char **cmd, int *fd);
+void		double_free_str(char *s1, char *s2);
+int			helper_parser(char *line, char *temp);
 
 /* === ENV === */
 void		init_data_env(char **env);

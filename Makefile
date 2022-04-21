@@ -23,7 +23,6 @@ SRCS =	main.c \
 		srcs/parsing/parsing2.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/export_clean.c\
-		srcs/parsing/parsing3.c \
 		srcs/parsing/help_exec.c\
 		srcs/parsing/norminette_friendly.c\
 		srcs/parsing/norminette_friendly2.c\

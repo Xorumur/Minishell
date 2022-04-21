@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:22:36 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/20 11:38:08 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:11:13 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	cmd_unset(char **cmd)
 	t_env	*start;
 
 	i = 1;
-	start = g_data.env;
 	env = g_data.env;
+	start = env;
 	if (!cmd[1])
 		return (1);
 	while (cmd[i])

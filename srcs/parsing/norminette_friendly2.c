@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:27:20 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 17:42:16 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:04:59 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,24 @@ int	*det_stdin(t_tokenlist **tmp, int *fd)
 		close(fd[1]);
 	}
 	return (fd);
+}
+
+void	double_free_str(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
+	return ;
+}
+
+int	helper_parser(char *line, char *temp)
+{
+	if (temp[0] == 0)
+	{
+		if (!line)
+			line = ft_strdup("\n");
+		else
+			line = ft_strjoin_h(line, ft_strdup("\n"));
+		free(temp);
+	}
+	return (0);
 }

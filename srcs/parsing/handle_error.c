@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 11:40:21 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/20 11:42:48 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:07:04 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,23 @@ int	redir_verif(t_tokenlist *tmp)
 	{
 		printf("syntax error near unexpected token '%s'\n",
 			tmp->next->token->value);
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
 	else if (tmp->next == NULL)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
 	else if (!tmp->next)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
 	else
-	{
-		g_data.verif = TRUE;
 		return (0);
-	}
 }
 
 int	dredir_verif(t_tokenlist *tmp)
@@ -62,7 +56,6 @@ int	dredir_verif(t_tokenlist *tmp)
 	if (!tmp->next)
 	{
 		printf("syntax error near unexpected token 'newline'\n");
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
@@ -70,15 +63,11 @@ int	dredir_verif(t_tokenlist *tmp)
 	{
 		printf("syntax error near unexpected token '%s'\n",
 			tmp->next->token->value);
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
 	else
-	{
-		g_data.verif = FALSE;
 		return (0);
-	}
 }
 
 int	dredirl_verif(t_tokenlist *tmp)
@@ -89,15 +78,11 @@ int	dredirl_verif(t_tokenlist *tmp)
 	if (lst->next == NULL)
 	{
 		printf("syntax error near unexpected token `newline'\n");
-		g_data.verif = TRUE;
 		g_data.exec = 258;
 		return (-1);
 	}
 	else
-	{
-		g_data.verif = FALSE;
 		return (0);
-	}
 }
 
 int	handle_error_token(void)

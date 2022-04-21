@@ -42,24 +42,15 @@ void	heredoc(t_tokenlist **token, int in)
 			if (verif_limiter(temp, (*token)->next->token->value) == 1)
 			{
 				ft_putstr_fd(line, in);
-				free(line);
-				free(temp);
 				(*token) = (*token)->next->next;
-				return ;
+				return (double_free_str(temp, line));
 			}
 			if (line)
 				temp = ft_strjoin_h(line, temp);
-			line = ft_strjoin(temp, "\n");
-			free(temp);
+			line = ft_strjoin_w(temp, "\n");
 		}
-		else if (temp[0] == 0)
-		{
-			if (!line)
-				line = ft_strdup("\n");
-			else
-				line = ft_strjoin_h(line, ft_strdup("\n"));
-			free(temp);
-		}
+		else if (helper_parser(line, temp))
+			;
 	}
 }
 
