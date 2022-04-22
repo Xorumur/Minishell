@@ -9,6 +9,8 @@ SRCS =	main.c \
 		srcs/builtins/builtins2.c \
 		srcs/builtins/norme_export.c\
 		srcs/builtins/norme_export2.c\
+		srcs/builtins/echo_clean.c\
+		srcs/builtins/norme_echo.c\
 		srcs/utils.c \
 		srcs/utils2.c \
 		srcs/env.c \

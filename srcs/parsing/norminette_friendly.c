@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 15:00:00 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 22:45:06 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:50:51 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	builtins_parsing(int redir, char **cmd)
 	}
 	else if (cmd && !ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
 	{
-		echo_cmd(g_data, redir);
+		echo_clean(g_data, redir);
 		if (cmd)
 			free_tab(cmd);
 		close(redir);

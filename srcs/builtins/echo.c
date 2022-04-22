@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 13:03:07 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:50:14 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,72 +37,22 @@ int	echo_cmd(t_data s_data, int redir)
 	i = 0;
 	tmp = s_data.tokens;
 	cmd = s_data.cmd;
-	while (i < ft_strlen("echo"))
-			i++;
-	if (!cmd[i])
-	{
-		ft_putchar_fd('\n', redir);
+	printf("%s\n", cmd);
+	if (redir == -1)
+		redir = 1;
+	if (skip_echo(&o, &i, &tmp, redir) == 1)
 		return (1);
-	}
-	while (cmd[i] && ft_iswspace(cmd[i]) == 1)
-		i++;
-	if (tmp->next)
-		tmp = tmp->next;
-	if (!ft_strncmp(tmp->token->value, "-n", ft_strlen("-n")))
-	{
-		tmp = tmp->next;
-		o = 1;
-		while (cmd[i] && ft_iswspace(cmd[i]) != 1)
-			i++;
-		while (cmd[i] && ft_iswspace(cmd[i]) == 1)
-			i++;
-	}
 	while (cmd[i] && tmp && tmp->token->e_type != 5 && tmp->token->e_type != 6
 		&& tmp->token->e_type != 8 && tmp->token->e_type != 7)
 	{
 		if (cmd[i] && ft_isquote(cmd[i]) == 1)
-		{
-			if (tmp)
-				ft_putstr_fd(tmp->token->value, redir);
-			tmp = tmp->next;
-			i++;
-			while (cmd[i] && ft_isquote(cmd[i]) != 1)
-				i++;
-			i++;
-			while (cmd[i] && ft_isquote(cmd[i]) == 1)
-				i++;
-		}
+			folu(cmd, &tmp, redir, &i);
 		else
-		{
-			if (tmp)
-				ft_putstr_fd(tmp->token->value, redir);
-			if (tmp && tmp->next)
-				tmp = tmp->next;
-			else
-				tmp = NULL;
-			while (cmd[i] && ft_isprint(cmd[i]) > 0 && ft_iswspace(cmd[i]) != 1
-				&& ft_isquote(cmd[i]) != 1 && ft_isequal(cmd[i]) != 1)
-			{
-				i++;
-			}
-			if (cmd[i] && ft_isequal(cmd[i]) == 1)
-				i++;
-		}
+			foli(cmd, &i, &tmp, redir);
 		if (cmd[i] && ft_iswspace(cmd[i]) == 1)
-		{
-			ft_putchar_fd(' ', redir);
-			i++;
-			while (cmd[i] && ft_iswspace(cmd[i]) == 1)
-				i++;
-		}
+			fole(cmd, &i, redir);
 	}
-	while (tmp && ft_isquote(tmp->token->value[0]) == 1)
-	{
-		ft_putstr_fd(tmp->token->value, redir);
-		tmp = tmp->next;
-	}
-	if (o == -1)
-		ft_putchar_fd('\n', redir);
+	folo(&tmp, redir, &o);
 	g_data.exec = 0;
 	return (1);
 }

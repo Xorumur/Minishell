@@ -26,7 +26,6 @@ void	ft_swap_env_content(char *name, char *content)
 		}
 		tmp = tmp->next;
 	}
-
 }
 
 static void	cmd_unset_assist(char *name, char *content)

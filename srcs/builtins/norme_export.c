@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 22:47:43 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 23:24:26 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/21 23:53:57 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	skip_content(char **new_env, int *i, t_tokenlist **tmp, char *cmd)
 	return (0);
 }
 
-void change_env(char *new_env, char *content)
+void	change_env(char *new_env, char *content)
 {
 	if (env_exist(new_env) == 0)
 		ft_lstadd_back_env(&g_data.env,
@@ -53,7 +53,8 @@ int	start_export(t_tokenlist **tmp, int *i, int redir)
 		redir = 1;
 	while (*i < ft_strlen("export"))
 		*i += 1;
-	if (!(*tmp)->next || (*tmp)->next->token->e_type == 6 || (*tmp)->next->token->e_type == 8)
+	if (!(*tmp)->next || (*tmp)->next->token->e_type == 6
+		|| (*tmp)->next->token->e_type == 8)
 	{
 		print_env(g_data.env, redir);
 		g_data.exec = 0;

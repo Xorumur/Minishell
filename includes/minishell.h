@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/21 23:48:04 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:51:21 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,13 @@ void		elaf(char *cmd, t_tokenlist **tmp, int *i, char **content);
 void		elef(char *cmd, t_tokenlist **tmp, int *i);
 void		elof(char **content, t_tokenlist **tmp, int *i);
 int			normexport(char *content, char *new_env, t_tokenlist *tmp, int i);
+int			skip_echo(int *o, int *i, t_tokenlist **tmp, int redir);
+void		folu(char *cmd, t_tokenlist **tmp, int redir, int *i);
+void 		folo(t_tokenlist **tmp, int redir, int *o);
+void		fole(char *cmd, int *i, int redir);
+void		foli(char *cmd, int *i, t_tokenlist **tmp, int redir);
+int			echo_clean(t_data s_data, int redir);
+
 /* === ENV === */
 void		init_data_env(char **env);
 char		*ft_getenv(char *name);
