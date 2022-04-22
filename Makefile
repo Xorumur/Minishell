@@ -11,6 +11,7 @@ SRCS =	main.c \
 		srcs/builtins/norme_export2.c\
 		srcs/builtins/echo_clean.c\
 		srcs/builtins/norme_echo.c\
+		srcs/builtins/echo.c \
 		srcs/utils.c \
 		srcs/utils2.c \
 		srcs/env.c \
@@ -25,13 +26,13 @@ SRCS =	main.c \
 		srcs/parsing/handle_error.c \
 		srcs/parsing/handle_error2.c \
 		srcs/parsing/parsing2.c \
-		srcs/builtins/echo.c \
 		srcs/builtins/export_clean.c\
 		srcs/parsing/help_exec.c\
 		srcs/parsing/norminette_friendly.c\
 		srcs/parsing/norminette_friendly2.c\
 		#srcs/builtins/export.c \
 		srcs/builtins/export2.c \
+		
 
 OBJS = $(SRCS:.c=.o)
 
