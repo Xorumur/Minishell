@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:28:23 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/22 17:02:52 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:08:10 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		write_fd(char *path, int fd);
 int			is_builtins(char **cmd);
 int			checker_arg(t_tokenlist *lst);
 int			env_exist(char *name);
-void 		process_fork_builtins(char **cmd, int redir);
+void		process_fork_builtins(char **cmd, int redir);
 int			exec_builtins(char **cmd, int redir);
 int			path_search(char **cmd);
 void		print_path_error(char *cmd, int id);
@@ -142,7 +142,7 @@ void		double_free_str(char *s1, char *s2);
 int			helper_parser(char *line, char *temp);
 int			unset_norm(t_env **tmp, char *cmd);
 int			skip_content(char **new_env, int *i, t_tokenlist **tmp, char *cmd);
-void 		change_env(char *new_env, char *content);
+void		change_env(char *new_env, char *content);
 int			freee(char *s1);
 int			start_export(t_tokenlist **tmp, int *i, int redir);
 void		cmd_unset_assist(char *name, char *content);
