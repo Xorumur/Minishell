@@ -6,7 +6,7 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 23:55:21 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/22 17:03:58 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:18:25 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	skip_echo(int *o, int *i, t_tokenlist **tmp, int redir)
 {
 	while (*i < ft_strlen("echo"))
 		*i += 1;
-	printf("%i\n", *i);
 	if (!g_data.cmd[*i])
 	{
 		ft_putchar_fd('\n', redir);
@@ -26,7 +25,7 @@ int	skip_echo(int *o, int *i, t_tokenlist **tmp, int redir)
 		*i += 1;
 	if ((*tmp)->next)
 		(*tmp) = (*tmp)->next;
-	if (!ft_strncmp((*tmp)->token->value, "-n", ft_strlen("-n")))
+	while (!ft_strncmp((*tmp)->token->value, "-n", ft_strlen("-n")))
 	{
 		(*tmp) = (*tmp)->next;
 		*o = 1;
