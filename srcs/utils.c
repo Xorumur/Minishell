@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 20:41:45 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/19 20:42:12 by mlecherb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*ft_realloc(char *src, int size)
@@ -33,7 +45,6 @@ char	**realloc_tab(char	**t, int size)
 		i++;
 		j++;
 	}
-	// free_tab(t);
 	dest[i] = NULL;
 	return (dest);
 }
@@ -77,11 +88,10 @@ void	print_tab(char **x)
 	int	i;
 
 	i = 0;
-	// printf("PASSAGE\n");
 	while (x[i])
 	{
 		ft_putstr_fd(x[i], 1);
 		i++;
 		ft_putchar_fd('\n', 1);
-	} 
+	}
 }

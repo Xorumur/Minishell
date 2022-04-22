@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:58:09 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/16 10:04:37 by marvin           ###   ########.fr       */
+/*   Updated: 2022/04/20 11:37:50 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ int	change_cd(char	**directory)
 	g_data.exec = 0;
 	return (1);
 }
-

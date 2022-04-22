@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_collect_id.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 20:17:42 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/20 11:48:30 by mlecherb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -28,8 +39,6 @@ char	*lexer_dollar_id(t_lexer *lexer, char *values, char *s)
 		alphastr = get_alpha_string(lexer);
 		s = ft_getenv(alphastr);
 		free(alphastr);
-		// if (!s)
-		// 	return NULL;
 		values = ft_realloc(values, (ft_strlen(values) + ft_strlen(s) + 1));
 		ft_strlcat(values, s, ft_strlen(values) + ft_strlen(s) + 1);
 		free(s);

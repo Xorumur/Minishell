@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export2.c                                          :+:      :+:    :+:   */
+/*   echo_clean.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 17:44:11 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/04/14 22:52:20 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/22 13:28:42 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/22 17:21:22 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	env_exist(char *name)
+int	echo_clean(t_data s_data, int redir)
 {
-	t_env *tmp;
+	t_tokenlist	*tmp;
+	char		*cmd;
+	int			i;
+	int			o;
 
-	tmp = g_data.env;
-	while (tmp)
+	o = -1;
+	i = 0;
+	tmp = s_data.tokens;
+	cmd = s_data.cmd;
+	if (redir == -1)
+		redir = 1;
+	if (skip_echo(&o, &i, &tmp, redir) != 1)
 	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(tmp->name)))
-			return (1);
-		tmp = tmp->next;
+		if (loop_echo(cmd, &tmp, &i, redir) == 1)
+			;
 	}
-	return (0);
+	if (o == -1)
+		ft_putchar_fd('\n', redir);
+	g_data.exec = 0;
+	return (1);
 }
