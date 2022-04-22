@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 09:40:25 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:09:04 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/07 19:07:33 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/20 11:57:35 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+void	*ft_memdel(void *ptr)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	if (!src)
-		return (ft_strlen(dest));
-	while (dest[i] && i < size)
-		i++;
-	while (src[j] && (i + j + 1) < size)
+	if (ptr)
 	{
-		dest[i + j] = src[j];
-		j++;
+		free(ptr);
+		ptr = NULL;
 	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
+	return (NULL);
 }

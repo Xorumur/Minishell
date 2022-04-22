@@ -1,0 +1,14 @@
+ctrl + \ ?
+Les valeurs d'erreur
+leaks
+Norme
+
+Export :
+-Gerer plusieurs '='.
+-Gerer le fait que le contenue peut avoir un espace entre quote.
+-Gerer de bien skip les export avec une variable sans 
+    '=' après, et bien mettre a jour la liste chaîné.
+-Si le token suivant le '=' est NULL skip le token et 
+le texte qui suit le '=' et rajouter la variable avec un content 
+    NULL. 
+    (ça peut être des quotes tout court comme ça "")

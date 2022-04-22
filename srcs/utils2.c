@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 09:40:25 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:09:04 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/14 20:41:18 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/19 20:42:24 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+char	*ft_strjoin_w(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
+	char	*str;
+	int		i;
+	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	if (!src)
-		return (ft_strlen(dest));
-	while (dest[i] && i < size)
-		i++;
-	while (src[j] && (i + j + 1) < size)
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen((char *)s1)
+				+ ft_strlen((char *)s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[j])
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }

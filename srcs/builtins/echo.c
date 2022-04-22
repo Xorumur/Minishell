@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 09:40:25 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:09:04 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/09 16:52:19 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/22 16:54:24 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+int	ft_isquote(int c)
 {
-	size_t	i;
-	size_t	j;
+	if (c == '"' || c == 39)
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	j = 0;
-	if (!src)
-		return (ft_strlen(dest));
-	while (dest[i] && i < size)
-		i++;
-	while (src[j] && (i + j + 1) < size)
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
+int	ft_isequal(int c)
+{
+	if (c == '=')
+		return (1);
+	return (0);
 }

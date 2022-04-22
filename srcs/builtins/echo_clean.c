@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   echo_clean.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 09:40:25 by mlecherb          #+#    #+#             */
-/*   Updated: 2022/03/31 18:09:04 by mlecherb         ###   ########.fr       */
+/*   Created: 2022/04/22 13:28:42 by mlecherb          #+#    #+#             */
+/*   Updated: 2022/04/22 17:21:22 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+int	echo_clean(t_data s_data, int redir)
 {
-	size_t	i;
-	size_t	j;
+	t_tokenlist	*tmp;
+	char		*cmd;
+	int			i;
+	int			o;
 
+	o = -1;
 	i = 0;
-	j = 0;
-	if (!src)
-		return (ft_strlen(dest));
-	while (dest[i] && i < size)
-		i++;
-	while (src[j] && (i + j + 1) < size)
+	tmp = s_data.tokens;
+	cmd = s_data.cmd;
+	if (redir == -1)
+		redir = 1;
+	if (skip_echo(&o, &i, &tmp, redir) != 1)
 	{
-		dest[i + j] = src[j];
-		j++;
+		if (loop_echo(cmd, &tmp, &i, redir) == 1)
+			;
 	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
+	if (o == -1)
+		ft_putchar_fd('\n', redir);
+	g_data.exec = 0;
+	return (1);
 }

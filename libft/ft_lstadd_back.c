@@ -6,13 +6,13 @@
 /*   By: mlecherb <mlecherb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 15:12:58 by mlecherb          #+#    #+#             */
-/*   Updated: 2021/10/26 15:13:23 by mlecherb         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:02:35 by mlecherb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+void	ft_lstadd_back(t_env **alst, t_env *new)
 {
 	t_list	*temp;
 
